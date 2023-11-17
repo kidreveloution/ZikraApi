@@ -3,8 +3,8 @@ from fastapi import FastAPI, File, Request, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from memory import *
 from pydantic import BaseModel
-import aiofiles
-import shutil
+
+
 import os
 app = FastAPI()
 
@@ -29,7 +29,8 @@ class addEntry(BaseModel):
     title: str
     location: str 
     timestamp: str
-    coordinates: str
+    lat: float
+    lon: float
     link: str
 
 @app.post("/addmemory/")
@@ -39,7 +40,6 @@ def read_item(
     videoMemory = Video(title=item.title,location=item.location,timestamp=item.timestamp,lat=item.lat,lon = item.lon,link=item.link)
     redisSave(videoMemory)
     return {"message": f"Successfully Added {videoMemory.title}"}
-
 
 @app.post("/uploadMemory/")
 async def upload(
@@ -68,3 +68,11 @@ async def upload(
 def get_item(itemId: str) -> Any:
     memory = redisLoad(itemId)
     return memory
+
+@app.get("/getMemories/{top_left_lat}&{top_left_lon}&{bottom_right_lat}&{bottom_right_lon}")
+def get_item(top_left_lat: float,
+            top_left_lon:float,
+            bottom_right_lat: float,
+            bottom_right_lon: float,
+            ):
+    return getMemories(GeoRectangle(top_left_lat,top_left_lon,bottom_right_lat,bottom_right_lon))
