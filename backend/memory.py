@@ -42,7 +42,6 @@ def getMemories(geo_rectangle):
 
     return in_rectangle
 
-
 class GeoRectangle:
     def __init__(self, top_left_lat, top_left_lon, bottom_right_lat, bottom_right_lon):
         self.top_left_lat = top_left_lat
@@ -62,9 +61,6 @@ class GeoRectangle:
         lon_diff = abs(self.top_left_lon - self.bottom_right_lon)
         diagonal = math.sqrt(lat_diff**2 + lon_diff**2)
         return diagonal / 2 * 111  # Conversion to kilometers
-
-    
-
 
 class Memory:
     def __init__(self, title: str, location: str, timestamp, lat: float, lon: float, id=None):

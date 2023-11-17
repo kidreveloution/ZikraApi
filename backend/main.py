@@ -66,8 +66,12 @@ async def upload(
     
 @app.get("/getMemoryById/{itemId}")
 def get_item(itemId: str) -> Any:
-    memory = redisLoad(itemId)
-    return memory
+    try:
+        memory = redisLoad(itemId)
+        return memory
+    except:
+        return {"message": f"'{itemId}' does not exist"}
+
 
 @app.get("/getMemories/{top_left_lat}&{top_left_lon}&{bottom_right_lat}&{bottom_right_lon}")
 def get_item(top_left_lat: float,
