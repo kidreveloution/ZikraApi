@@ -1,0 +1,35 @@
+#datepicker {
+    position: absolute; /* Corrected positioning */
+    top: 0px; /* Adjust as needed */
+    left: 0px; /* Adjust as needed */
+    z-index: 10; /* Ensures it appears above other elements */
+
+    /* Styling for a sleek and clean appearance */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 16px;
+    color: #333;
+    width: 200px; /* Fixed width */
+
+    transition: box-shadow 0.3s, transform 0.2s; /* Smooth transition */
+}
+
+#datepicker:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Larger shadow for hover */
+}
+
+#datepicker:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow for a pressed effect */
+    transform: translateY(2px); /* Slight downward shift to simulate pressing */
+}
+
+#dateDiv{
+    display: flex;
+    position: absolute;
+    top: 60px; /* Adjust as needed to place it at the desired location on the map */
+    left: 10px; /* Adjust as needed */
+    z-index: 10; /* Ensures it appears above the map */
+}

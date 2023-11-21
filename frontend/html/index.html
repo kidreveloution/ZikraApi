@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zikra - Your Memories on a Map</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="../css/memButton.css">
+    <link rel="stylesheet" type="text/css" href="../css/memForm.css">
+    <link rel="stylesheet" type="text/css" href="../css/calender.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+    <!-- Inline Styles -->
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Map Container -->
+    <div id="map"></div>
+
+    <!-- Add Memory Button -->
+    <div id="memoryBtnDiv">
+        <button class="add-memory-btn" id="addMemoryBtn" >
+            <i class="fas fa-plus" id="icon"></i>
+        </button>
+    </div>  
+    <!-- Date Picker -->
+    <div id="dateDiv">
+        <input type="text" id="datepicker" readonly>
+    </div>
+
+    <div id="addMemDiv" style="display: none;">
+        <form class="addMemoryForm" id="addMemoryForm" action="/addmemory/" method="post" >
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            
+            <div>
+                <label for="location">Choose Location on Map</label>
+                <input type="text" id="location" name="location" readonly>
+            </div>
+        
+            <div>
+                <label for="timestamp">Timestamp:</label>
+                <input type="datetime-local" id="timestamp" name="timestamp" required>
+            </div>
+        
+            <div>
+                <label for="lat">Latitude:</label>
+                <input type="number" step="any" id="lat" name="lat" required>
+            </div>
+        
+            <div>
+                <label for="lon">Longitude:</label>
+                <input type="number" step="any" id="lon" name="lon" required>
+            </div>
+        
+            <div>
+                <label for="link">Link:</label>
+                <input type="url" id="link" name="link" required>
+            </div>
+        
+            <button type="submit">Add Memory</button>
+        </form>        
+    </div> 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtjjPFCnZakIyYBuhJSG83O-bCAsrOlxs"></script>
+    <script src="../js/map.js"></script>
+    <script src="../js/calendar.js"></script>
+    <script src="../js/addMemory.js"></script>
+
+
+
+</body>
+</html>
