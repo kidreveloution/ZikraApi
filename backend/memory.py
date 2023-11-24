@@ -1,6 +1,9 @@
+import pprint
+
 import redis
 import json
 import uuid
+from datetime import datetime
 import math
 
 redis_connection = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
@@ -33,6 +36,7 @@ def redisSave(memory):
 
 def getMemories(geo_rectangle,timestamp):
     points = redis_connection.georadius("memories", longitude=geo_rectangle.center_long, latitude=geo_rectangle.center_lat, radius=geo_rectangle.radius, unit='km', withcoord=True)
+    timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
 
     in_rectangle = []
     for point in points:
@@ -41,12 +45,24 @@ def getMemories(geo_rectangle,timestamp):
         geo_rectangle.sw_lat <= lat <= geo_rectangle.ne_lat:
             in_rectangle.append(point[0])
 
-            
+    res = []
+    locations= {}
     for memory in in_rectangle:
         individual = redisLoad(memory)
-        print(individual)
-        
-    return points
+        ind_timestamp = individual['timestamp']
+        ind_location = individual['location']
+        memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
+        if (memDate == timestamp):
+            {
+            res.append(individual)
+        }
+        if ind_location in locations:
+            locations[ind_location].append(individual)
+        else:
+            locations[ind_location] = [individual]
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint(locations)
+    return (locations)        
 
 class GeoRectangle:
     def __init__(self, ne_lat, ne_long, sw_lat, sw_long,center_lat,center_long):
