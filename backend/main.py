@@ -3,8 +3,7 @@ from fastapi import FastAPI, File, Request, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from memory import *
 from pydantic import BaseModel
-
-
+from fastapi import FastAPI, Query
 import os
 app = FastAPI()
 
@@ -72,11 +71,20 @@ def get_item(itemId: str) -> Any:
     except:
         return {"message": f"'{itemId}' does not exist"}
 
-
-@app.get("/getMemories/{top_left_lat}&{top_left_lon}&{bottom_right_lat}&{bottom_right_lon}")
-def get_item(top_left_lat: float,
-            top_left_lon:float,
-            bottom_right_lat: float,
-            bottom_right_lon: float,
-            ):
-    return getMemories(GeoRectangle(top_left_lat,top_left_lon,bottom_right_lat,bottom_right_lon))
+# "ne_lat": bounds.getNortheast().lat(),
+# "ne_long": bounds.getNortheast().lng(),
+# "sw_lat": bounds.getSouthwest().lat(),
+# "sw_long": bounds.getSouthwest().lng(),
+# "center_lat":bounds.getCenter().lat(),
+# "center_long":bounds.getCenter().lng(),
+# "timestamp": timestamp,
+@app.get("/getMemories")
+def get_item(ne_lat: float = Query(None),
+             ne_long: float = Query(None),
+             sw_lat: float = Query(None),
+             sw_long: float = Query(None),
+             center_lat: float = Query(None),
+             center_long: float = Query(None),
+             timestamp: str = None):
+    # Call your getMemories function with the retrieved parameters
+    return getMemories(GeoRectangle(ne_lat, ne_long, sw_lat, sw_long, center_lat, center_long), timestamp)

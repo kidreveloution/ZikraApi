@@ -28,27 +28,34 @@ def redisSave(memory):
                         )
     redis_connection.geoadd(name='memories',values=[memory.lon, memory.lat, memory.id])
     pass
+#Timestamp = YYYY-MM-DD
 
-def getMemories(geo_rectangle):
-    points = redis_connection.georadius("memories", geo_rectangle.center_lon, geo_rectangle.center_lat, geo_rectangle.radius, unit='km', withcoord=True)
+
+def getMemories(geo_rectangle,timestamp):
+    points = redis_connection.georadius("memories", longitude=geo_rectangle.center_long, latitude=geo_rectangle.center_lat, radius=geo_rectangle.radius, unit='km', withcoord=True)
 
     in_rectangle = []
     for point in points:
         lon, lat = point[1]
-        if geo_rectangle.top_left_lon <= lon <= geo_rectangle.bottom_right_lon and \
-           geo_rectangle.bottom_right_lat <= lat <= geo_rectangle.top_left_lat:
+        if geo_rectangle.sw_long <= lon <= geo_rectangle.ne_long and \
+        geo_rectangle.sw_lat <= lat <= geo_rectangle.ne_lat:
             in_rectangle.append(point[0])
-            
 
-    return in_rectangle
+            
+    for memory in in_rectangle:
+        individual = redisLoad(memory)
+        print(individual)
+        
+    return points
 
 class GeoRectangle:
-    def __init__(self, top_left_lat, top_left_lon, bottom_right_lat, bottom_right_lon):
-        self.top_left_lat = top_left_lat
-        self.top_left_lon = top_left_lon
-        self.bottom_right_lat = bottom_right_lat
-        self.bottom_right_lon = bottom_right_lon
-        self.center_lat, self.center_lon = self.get_center()
+    def __init__(self, ne_lat, ne_long, sw_lat, sw_long,center_lat,center_long):
+        self.ne_lat = ne_lat
+        self.ne_long = ne_long
+        self.sw_lat = sw_lat
+        self.sw_long = sw_long
+        self.center_lat = center_lat
+        self.center_long = center_long
         self.radius = self.calculate_radius()
 
     def get_center(self):
@@ -57,8 +64,8 @@ class GeoRectangle:
         return center_lat, center_lon
 
     def calculate_radius(self):
-        lat_diff = abs(self.top_left_lat - self.bottom_right_lat)
-        lon_diff = abs(self.top_left_lon - self.bottom_right_lon)
+        lat_diff = abs(self.ne_lat - self.sw_lat)
+        lon_diff = abs(self.ne_long - self.sw_long)
         diagonal = math.sqrt(lat_diff**2 + lon_diff**2)
         return diagonal / 2 * 111  # Conversion to kilometers
 
