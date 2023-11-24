@@ -1,0 +1,20 @@
+{
+  "name": "zikra.io",
+  "version": "1.0.0",
+  "description": "## Description Zikra.io is a web application that allows users to view and add memories on a geographical and temporal plane. This innovative platform combines the power of mapping with the rich context of historical and personal events.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jquery": "^3.5.29",
+    "@types/pikaday": "^1.7.9",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "pikaday": "^1.8.2"
+  }
+}

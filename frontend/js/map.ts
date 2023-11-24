@@ -12,8 +12,6 @@ function initMap(): void {
         center: { lat: 31.476737, lng: 34.4813380 },
         styles: [
             {
-                streetViewControl: false,
-                disableDefaultUI: false,
                 featureType: "poi",
                 elementType: "labels",
                 stylers: [{ visibility: "off" }],
@@ -83,7 +81,7 @@ function dropLocPin(latLng: google.maps.LatLng): void {
 }
 
 function getBounds(): google.maps.LatLngBounds | null {
-    return map.getBounds();
+    return map.getBounds() as google.maps.LatLngBounds | null;
 }
 
 // Load the map

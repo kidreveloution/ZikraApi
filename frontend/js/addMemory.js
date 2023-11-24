@@ -1,40 +1,53 @@
-document.getElementById('addMemoryBtn').addEventListener('click', function() {
-    var icon = document.getElementById('icon');
-    if (icon.classList.contains('fa-plus')) {
-        datepicker.style.display = 'none'; 
+"use strict";
+document.getElementById('addMemoryBtn').addEventListener('click', function () {
+    const icon = document.getElementById('icon');
+    const datepicker = document.getElementById('datepicker');
+    const addMemDiv = document.getElementById('addMemDiv');
+    if (icon && icon.classList.contains('fa-plus')) {
+        if (datepicker) {
+            datepicker.style.display = 'none';
+        }
         activateMapClick();
-        addMemDiv.style.removeProperty('display');
+        if (addMemDiv) {
+            addMemDiv.style.removeProperty('display');
+        }
         icon.classList.remove('fa-plus');
         icon.classList.add('fa-minus');
-
-    } else {
-        datepicker.style.removeProperty('display');
-        addMemDiv.style.display = 'none'; 
+    }
+    else if (icon) {
+        if (datepicker) {
+            datepicker.style.removeProperty('display');
+        }
+        if (addMemDiv) {
+            addMemDiv.style.display = 'none';
+        }
         deactivateMapClick();
         icon.classList.remove('fa-minus');
         icon.classList.add('fa-plus');
     }
 });
-
-document.getElementById('submitMemoryBtn').addEventListener('click', function() {    
-    var memory ={
-        "title": String(document.getElementById('title').value),
+document.getElementById('submitMemoryBtn').addEventListener('click', function () {
+    const titleElement = document.getElementById('title');
+    const timestamp = document.getElementById('timestamp');
+    const link = document.getElementById('link');
+    var memory = {
+        "title": String(titleElement.value),
         "location": String(locationName),
-        "timestamp": String(document.getElementById('timestamp').value),
+        "timestamp": String(timestamp.value),
         "lat": String(lat),
         "lon": String(long),
-        "link": String(document.getElementById('link').value),
-    }
-    console.log(memory)
-
+        "link": String(link.value),
+    };
+    console.log(memory);
     $.ajax({
         url: addMemoryEndpoint,
         type: "POST",
         data: JSON.stringify(memory),
         contentType: "application/json",
         success: function (data) {
-            console.log("Memory Added")
-            document.getElementById("addMemoryForm").reset();
+            console.log("Memory Added");
+            const form = document.getElementById("addMemoryForm");
+            form.reset();
         }
-    })
+    });
 });
