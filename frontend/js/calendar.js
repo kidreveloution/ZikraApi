@@ -1,4 +1,5 @@
 var formattedDate;
+
 function handleDateSelection() {
     var selectedDate = picker.getDate();
     formattedDate = selectedDate.toISOString();

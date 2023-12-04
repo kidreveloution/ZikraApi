@@ -10,17 +10,8 @@ function initMap() {
         zoom: 10,
         mapId: "bc55fc2e7ebbdda0",
         center: { lat: 31.476737, lng: 34.4813380 }, // Set your own default coordinates
-        styles: [
-        {
-            streetViewControl: false,
-            disableDefaultUI: false,
-            featureType: "poi",
-            elementType: "labels",
-            stylers: [
-            { visibility: "off" }
-            ]
-        }
-        ]
+        streetViewControl: false,
+        disableDefaultUI: false,
     });
 
 }
@@ -92,5 +83,5 @@ function getBounds(){
 
 // Load the map
 window.onload = function() {
-initMap();
+    initMap();
 };
