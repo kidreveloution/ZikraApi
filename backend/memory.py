@@ -36,17 +36,24 @@ def redisSave(memory):
 
 def getMemories(geo_rectangle,timestamp):
     points = redis_connection.georadius("memories", longitude=geo_rectangle.center_long, latitude=geo_rectangle.center_lat, radius=geo_rectangle.radius, unit='km', withcoord=True)
-    timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
+
+    #Edge case given the pikaday calls this
 
     in_rectangle = []
     for point in points:
         lon, lat = point[1]
-        if geo_rectangle.sw_long <= lon <= geo_rectangle.ne_long and \
-        geo_rectangle.sw_lat <= lat <= geo_rectangle.ne_lat:
+        if geo_rectangle.sw_long <= lon <= geo_rectangle.ne_long and geo_rectangle.sw_lat <= lat <= geo_rectangle.ne_lat:
             in_rectangle.append(point[0])
-
     res = []
+
+    if timestamp == None:
+        for memory in in_rectangle:
+            individual = redisLoad(memory)
+            res.append(individual["timestamp"])
+        return res
+    
     locations= {}
+    timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
     for memory in in_rectangle:
         individual = redisLoad(memory)
         ind_timestamp = individual['timestamp']
@@ -125,8 +132,7 @@ if __name__ == "__main__":
     # print(video.id)
     # retrieved_video = redisLoad(video.id)
     # print(retrieved_video)
-    obj = GeoRectangle(49.141067,44.491879,48.590697,46.08455)
-    print(obj.get_center())
-    print(getMemories(obj))
-    for id in getMemories(obj):
-        print(redisLoad(id))
+    obj = GeoRectangle(ne_lat=31.821606118113657,ne_long=35.51954600781248,sw_lat=31.130592290762717,sw_long=33.44312999218748,center_lat=31.476099204438185,center_long=34.48133799999998)
+    print(getMemories(obj,""))
+    # for id in getMemories(obj):
+    #     print(redisLoad(id))
