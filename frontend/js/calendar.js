@@ -1,4 +1,5 @@
 var formattedDate;
+memoryDates = []
 
 function handleDateSelection() {
     var selectedDate = picker.getDate();
@@ -8,45 +9,35 @@ function handleDateSelection() {
 
 }
 
-memoryDates = []
-
-function init_pikaday(){
-    picker = new Pikaday({ 
-        field: document.getElementById('datepicker'),
-        defaultDate: new Date(),
-        setDefaultDate: true,
-        render: function (date, cell) {
-            if (memoryDates.some(memoryDates => 
-                memoryDates.getDate() === memoryDates.getDate() && 
-                memoryDates.getMonth() === memoryDates.getMonth() && 
-                memoryDates.getFullYear() === memoryDates.getFullYear())) {
-                    cell.classList.add('event-date'); // Add a class to event dates
-            }
-        },
-        onSelect: handleDateSelection
-    })
-}
-
-var picker = new Pikaday({ 
-    field: document.getElementById('datepicker'),
-    defaultDate: new Date(),
-    setDefaultDate: true,
-    onSelect: handleDateSelection
-})
-
-function getDates(){
-    results = getMemoriesForCalendar()
-    for (result in results){
-        memoryDates.append(new Date(result))
-        console.log("THESE ARE THE ",result)
+function getDates() {
+    console.log("MEGAIND")
+    results = getMemoriesForCalendar();
+    // Assuming getMemoriesForCalendar is synchronous or this is inside a callback
+    memoryDates = []; // Reset the array
+    for (let result of results) { // Using for...of for array iteration
+        memoryDates.push(new Date(result)); // Using push instead of append
+        console.log("Memory Date: ", new Date(result));
     }
-    picker.destroy(); // Destroy the current instance
-    initializePikaday(); // Reinitialize Pikaday
 
+    // initializePikaday(); // Reinitialize Pikaday with the new dates
 }
 
-// Trigger the handleDateSelection function on page load
+
+var picker = new Pikaday({
+    field: document.getElementById('datepicker'),
+    onSelect: function(date) {
+        console.log(date);
+    },
+    events:[],
+});
+// function initPicker(){
+
+// }
 handleDateSelection();
-init_pikaday();
+
+
+window.onload = function() {
+    //initPicker();
+    getDates();
+};
 getDates();
-console.log("GOT HERE")

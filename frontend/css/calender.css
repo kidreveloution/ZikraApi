@@ -33,3 +33,7 @@
     left: 10px; /* Adjust as needed */
     z-index: 10; /* Ensures it appears above the map */
 }
+.highlighted-date {
+    background-color: #ff6868; /* Red background for highlighting */
+    color: white; /* White text color */
+}
