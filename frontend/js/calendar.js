@@ -1,43 +1,39 @@
-var formattedDate;
-memoryDates = []
+var picker; // Global variable for the Pikaday instance
 
-function handleDateSelection() {
-    var selectedDate = picker.getDate();
-    formattedDate = selectedDate.toISOString();
-    console.log("Selected Date: ", formattedDate);
-    showMemories(formattedDate)
-
-}
-
-function getDates() {
-    console.log("MEGAIND")
-    results = getMemoriesForCalendar();
-    // Assuming getMemoriesForCalendar is synchronous or this is inside a callback
-    memoryDates = []; // Reset the array
-    for (let result of results) { // Using for...of for array iteration
-        memoryDates.push(new Date(result)); // Using push instead of append
-        console.log("Memory Date: ", new Date(result));
+// Function to initialize or update Pikaday
+function initializeOrUpdatePikaday(events) {
+    // If picker already exists, destroy it
+    if (picker) {
+        picker.destroy();
     }
 
-    // initializePikaday(); // Reinitialize Pikaday with the new dates
+    // Initialize Pikaday with the new events
+    picker = new Pikaday({
+        field: document.getElementById('datepicker'),
+        onSelect: function(date) {
+            console.log("Selected Date: ", date.toISOString());
+        },
+        events: events.map(event => new Date(event))
+    });
 }
 
+// Function to get dates and update Pikaday
+async function updatePikadayWithNewEvents() {
+    console.log("Kiss Omk")
+    var results = await getMemoriesForCalendar(); // Fetch new events
+    console.log(results)
 
-var picker = new Pikaday({
+    initializeOrUpdatePikaday(results);
+}
+
+// Initial setup of Pikaday without events
+picker = new Pikaday({
     field: document.getElementById('datepicker'),
     onSelect: function(date) {
-        console.log(date);
+        console.log("Selected Date: ", date.toISOString());
     },
-    events:[],
+    events: [] // Initialize with no events
 });
-// function initPicker(){
 
-// }
-handleDateSelection();
-
-
-window.onload = function() {
-    //initPicker();
-    getDates();
-};
-getDates();
+// Update Pikaday with new events
+updatePikadayWithNewEvents();

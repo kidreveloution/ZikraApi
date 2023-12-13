@@ -25,29 +25,32 @@ function showMemories(timestamp){
 }
 
 
-function getMemoriesForCalendar(){
-    var bounds = _getBounds();
-    var dataStruct ={
-        "ne_lat": bounds.getNorthEast().lat(),
-        "ne_long": bounds.getNorthEast().lng(),
-        "sw_lat": bounds.getSouthWest().lat(),
-        "sw_long": bounds.getSouthWest().lng(),
-        "center_lat":bounds.getCenter().lat(),
-        "center_long":bounds.getCenter().lng(),
-        "timestamp": None,
-    }
+function getMemoriesForCalendar() {
+    return new Promise(async (resolve, reject) => {
+        var bounds = await _getBounds();
+        var dataStruct = {
+            "ne_lat": bounds.getNorthEast().lat(),
+            "ne_long": bounds.getNorthEast().lng(),
+            "sw_lat": bounds.getSouthWest().lat(),
+            "sw_long": bounds.getSouthWest().lng(),
+            "center_lat": bounds.getCenter().lat(),
+            "center_long": bounds.getCenter().lng(),
+        };
 
-    $.ajax({
-        url: showMemoriesEndpoint,
-        type: "GET",
-        data: dataStruct,
-        success: function (res) {
-            return res
-            //_populateMemories(res)
-
-        }
-    })
+        $.ajax({
+            url: showMemoriesEndpoint,
+            type: "GET",
+            data: dataStruct,
+            success: function (res) {
+                resolve(res); // Resolve the promise with the response
+            },
+            error: function (err) {
+                reject(err); // Reject the promise if there's an error
+            }
+        });
+    });
 }
+
 
 function buildContent(memory) {
     const content = document.createElement("div");

@@ -5,18 +5,16 @@ var map;
 var clickListener; 
 var marker;
 
-// Initialize Google Maps
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 10,
-        mapId: "bc55fc2e7ebbdda0",
-        center: { lat: 31.476737, lng: 34.4813380 }, // Set your own default coordinates
-        streetViewControl: false,
-        disableDefaultUI: false
-    });
-
-    // Additional initializations can be placed here
-}
+map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 10,
+    mapId: "bc55fc2e7ebbdda0",
+    center: { lat: 31.476737, lng: 34.4813380 }, // Set your own default coordinates
+    streetViewControl: false,
+    disableDefaultUI: false
+});
+google.maps.event.addListenerOnce(map, 'idle', function() {
+    console.log(map.getBounds());
+});
 
 // Function to activate map click event
 function activateMapClick() {
@@ -85,16 +83,26 @@ function getMapBounds() {
     return map.getBounds();
 }
 
-// Load the map on window load
-window.onload = function() {
-    initMap();
-};
 
-function _getBounds(){
-    return map.getBounds()
+
+// function _getBounds(){
+//     console.log(map.getBounds())
+//     return map.getBounds()
+// }
+function _getBounds() {
+    return new Promise((resolve, reject) => {
+        if (map) {
+            if (map.getBounds()) {
+                // If bounds are already available, resolve immediately
+                resolve(map.getBounds());
+            } else {
+                // Wait for the 'idle' event if bounds are not available
+                google.maps.event.addListenerOnce(map, 'idle', function() {
+                    resolve(map.getBounds());
+                });
+            }
+        } else {
+            reject(new Error("Map is not initialized"));
+        }
+    });
 }
-
-// Example usage
-// initMap();
-// console.log(getMapBounds());
-// activateMapClick();
