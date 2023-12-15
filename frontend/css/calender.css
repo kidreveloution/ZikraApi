@@ -17,15 +17,6 @@
     transition: box-shadow 0.3s, transform 0.2s; /* Smooth transition */
 }
 
-#datepicker:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Larger shadow for hover */
-}
-
-#datepicker:active {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow for a pressed effect */
-    transform: translateY(2px); /* Slight downward shift to simulate pressing */
-}
-
 #dateDiv{
     display: flex;
     position: absolute;
@@ -33,7 +24,13 @@
     left: 10px; /* Adjust as needed */
     z-index: 10; /* Ensures it appears above the map */
 }
-.highlighted-date {
-    background-color: #ff6868; /* Red background for highlighting */
-    color: white; /* White text color */
+#datepicker .pika-button.has-event {
+    background-color: #ff0000 !important; /* Change to your preferred color */
+    color: #ffffff; /* Adjust text color as needed */
+    /* Add any additional styling here */
 }
+
+.pika-button:hover{
+    background-color: red !important;
+}
+

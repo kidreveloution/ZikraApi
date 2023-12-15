@@ -8,12 +8,20 @@ var marker;
 map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
     mapId: "bc55fc2e7ebbdda0",
-    center: { lat: 31.476737, lng: 34.4813380 }, // Set your own default coordinates
+    center: { lat: 31.476737, lng: 34.4813380 }, 
     streetViewControl: false,
     disableDefaultUI: false
 });
-google.maps.event.addListenerOnce(map, 'idle', function() {
-    console.log(map.getBounds());
+
+google.maps.event.addListener(map, 'dragend', function() {
+    hideMarkers(); //Hiding All Markers
+    showMemories(showDate,map.getBounds()) // Showing all markers in bounds
+    updatePikadayWithNewEvents()
+});
+
+google.maps.event.addListener(map, 'zoom_changed', function() {
+    hideMarkers(); //Hiding All Markers
+    showMemories(showDate,map.getBounds()) // Showing all markers in bounds
 });
 
 // Function to activate map click event
@@ -37,7 +45,7 @@ function activateMapClick() {
 
 // Function to get address from latitude and longitude
 function getAddress(lat, long, callback) {
-    var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&key=YOUR_API_KEY";
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&key=AIzaSyCtjjPFCnZakIyYBuhJSG83O-bCAsrOlxs";
     $.ajax({
         url: url,
         type: 'GET',
@@ -62,33 +70,6 @@ function deactivateMapClick() {
     }
 }
 
-// Function to drop a pin on the map
-function dropPin(latLng) {
-    if (marker) {
-        marker.setPosition(latLng);
-    } else {
-        marker = new google.maps.Marker({
-            position: latLng,
-            map: map,
-            animation: google.maps.Animation.DROP
-            // Optional: specify a custom icon
-            // icon: 'path/to/your/custom/pin/image.png'
-        });
-    }
-}
-
-// Function to get the map's current bounds
-function getMapBounds() {
-    console.log(map.getBounds());
-    return map.getBounds();
-}
-
-
-
-// function _getBounds(){
-//     console.log(map.getBounds())
-//     return map.getBounds()
-// }
 function _getBounds() {
     return new Promise((resolve, reject) => {
         if (map) {

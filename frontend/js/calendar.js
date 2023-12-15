@@ -1,5 +1,5 @@
 var picker; // Global variable for the Pikaday instance
-
+var showDate;
 // Function to initialize or update Pikaday
 function initializeOrUpdatePikaday(events) {
     // If picker already exists, destroy it
@@ -11,18 +11,19 @@ function initializeOrUpdatePikaday(events) {
     picker = new Pikaday({
         field: document.getElementById('datepicker'),
         onSelect: function(date) {
-            console.log("Selected Date: ", date.toISOString());
+            console.log(events);
+            showDate = date.toISOString();
+            hideMarkers()
+            showMemories(showDate,map.getBounds())
+
         },
-        events: events.map(event => new Date(event))
+        events: events
     });
 }
 
 // Function to get dates and update Pikaday
 async function updatePikadayWithNewEvents() {
-    console.log("Kiss Omk")
     var results = await getMemoriesForCalendar(); // Fetch new events
-    console.log(results)
-
     initializeOrUpdatePikaday(results);
 }
 

@@ -33,6 +33,20 @@ def redisSave(memory):
     pass
 #Timestamp = YYYY-MM-DD
 
+def _getFormattedDate(datetime_object):
+    formatted_str = ""
+    weekdaysShort= ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat','Sun']
+    monthShort= ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+    dayOfWeek=  weekdaysShort[datetime_object.weekday()]
+    month = monthShort[datetime_object.month-1]
+    dayNum = datetime_object.day
+    year = datetime_object.year
+    if dayNum <= 9:
+        dayNum = "0"+str(dayNum)
+    formatted_str = str(dayOfWeek)+" "+str(month)+" "+str(dayNum)+" "+str(year)
+    return(formatted_str)
+
+
 
 def getMemories(geo_rectangle,timestamp):
     points = redis_connection.georadius("memories", longitude=geo_rectangle.center_long, latitude=geo_rectangle.center_lat, radius=geo_rectangle.radius, unit='km', withcoord=True)
@@ -49,27 +63,34 @@ def getMemories(geo_rectangle,timestamp):
     if timestamp == None:
         for memory in in_rectangle:
             individual = redisLoad(memory)
-            res.append(individual["timestamp"])
+            datetime_object = datetime.strptime(individual["timestamp"], '%Y-%m-%d')
+            formattedDate = _getFormattedDate(datetime_object=datetime_object)
+            if formattedDate in res:
+                pass
+            else:
+                res.append(formattedDate)
         return res
     
     locations= {}
     timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
+    
     for memory in in_rectangle:
         individual = redisLoad(memory)
         ind_timestamp = individual['timestamp']
         ind_location = individual['location']
         memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
+        print(memDate, timestamp)
         if (memDate == timestamp):
-            {
             res.append(individual)
-        }
+            print("ADDED TIME STAMP",timestamp)
+
         if ind_location in locations:
             locations[ind_location].append(individual)
         else:
             locations[ind_location] = [individual]
     pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(locations)
-    return (locations)        
+    #pp.pprint(locations)
+    return (res)        
 
 class GeoRectangle:
     def __init__(self, ne_lat, ne_long, sw_lat, sw_long,center_lat,center_long):

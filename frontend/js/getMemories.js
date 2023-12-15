@@ -1,7 +1,6 @@
+let markersArray = [];
 
-function showMemories(timestamp){
-        var bounds = _getBounds();
-
+function showMemories(timestamp,bounds){
         var dataStruct ={
             "ne_lat": bounds.getNorthEast().lat(),
             "ne_long": bounds.getNorthEast().lng(),
@@ -24,7 +23,6 @@ function showMemories(timestamp){
         })
 }
 
-
 function getMemoriesForCalendar() {
     return new Promise(async (resolve, reject) => {
         var bounds = await _getBounds();
@@ -42,6 +40,7 @@ function getMemoriesForCalendar() {
             type: "GET",
             data: dataStruct,
             success: function (res) {
+                console.log("THIS IS API RETURNS",res)
                 resolve(res); // Resolve the promise with the response
             },
             error: function (err) {
@@ -51,54 +50,51 @@ function getMemoriesForCalendar() {
     });
 }
 
-
 function buildContent(memory) {
     const content = document.createElement("div");
   
     content.classList.add("property");
-    console.log(memory);
-    console.log(memory['title']);
-    console.log(memory[0].title);
-    memory = memory[0]
+    //memory = memory[0]
 
 
     content.innerHTML = `
       <div class="icon">
-          <i aria-hidden="true" class="fa-solid fa-person-falling-burst" title="${memory.title}"></i>
+          <i aria-hidden="true" class="fa-solid fa-person-falling-burst" title="${memory['title']}"></i>
       </div>
       <div class="details">
-          <div class="price">${memory.title}</div>
-          <div class="address">${memory.description}</div>
+          <div class="price">${memory['title']}</div>
+          <div class="address">${memory['link']}</div>
           <div class="features">
           <div>
               <i aria-hidden="true" class="fas fa-bed" title="bedroom"></i>
               <span class="fa-sr-only">bedroom</span>
-              <span>${memory.bed}</span>
           </div>
           </div>
       </div>
       `;
     return content;
 }
-  
+
 async function _populateMemories(res){
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
   for (memory in res){
-      console.log(res[memory])
       if (res[memory].length > 1){
           //_populateSharedMemories(res[memory])
           //add Support for shared memory here
           console.log("BIGGER THAN 1")
           continue
-      }      
+      }   
+      console.log(memory)   
       const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
           map,
           content: buildContent(res[memory]),
-          position: { lat: res[memory][0]["lat"], lng: res[memory][0]["lon"] },
+          position: { lat: res[memory]["lat"], lng: res[memory]["lon"] },
           title: res[memory]["title"],
           //TODO: Need to eventually add animation
       });
+      markersArray.push(AdvancedMarkerElement)
+
       AdvancedMarkerElement.addListener("click", () => {
         toggleHighlight(AdvancedMarkerElement, memory);
       });
@@ -123,5 +119,4 @@ function toggleHighlight(markerView, property) {
       markerView.content.classList.add("highlight");
       markerView.zIndex = 1;
     }
-  }
-  
+} 
