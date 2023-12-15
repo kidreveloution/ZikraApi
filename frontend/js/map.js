@@ -4,6 +4,8 @@
 var map;
 var clickListener; 
 var marker;
+var newMarkerLat;
+var newMarkerLong;
 
 map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
@@ -28,11 +30,11 @@ google.maps.event.addListener(map, 'zoom_changed', function() {
 function activateMapClick() {
     if (!clickListener) {
         clickListener = map.addListener('click', function(e) {
-            var lat = e.latLng.lat();
-            var long = e.latLng.lng();
+            newMarkerLat = e.latLng.lat();
+            newMarkerLong = e.latLng.lng();
             dropPin(e.latLng);
 
-            getAddress(lat, long, function(address) {
+            getAddress(newMarkerLat, newMarkerLong, function(address) {
                 if (address) {
                     var inputField = document.getElementById('location');
                     inputField.innerHTML = address;
