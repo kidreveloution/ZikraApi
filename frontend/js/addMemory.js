@@ -16,25 +16,35 @@ document.getElementById('addMemoryBtn').addEventListener('click', function() {
     }
 });
 
-document.getElementById('submitMemoryBtn').addEventListener('click', function() {    
-    var memory ={
-        "title": String(document.getElementById('title').value),
-        "location": String(locationName),
-        "timestamp": String(document.getElementById('timestamp').value),
-        "lat": String(lat),
-        "lon": String(long),
-        "link": String(document.getElementById('link').value),
-    }
-    console.log(memory)
 
-    $.ajax({
-        url: addMemoryEndpoint,
-        type: "POST",
-        data: JSON.stringify(memory),
-        contentType: "application/json",
-        success: function (data) {
-            console.log("Memory Added")
-            document.getElementById("addMemoryForm").reset();
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('addMemoryForm').addEventListener('submit', function(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+        console.log('Form submitted!');   
+        var memory ={
+            "title": String(document.getElementById('title').value),
+            "location": String(document.getElementById('location').value),
+            "timestamp": String(document.getElementById('timestamp').value),
+            "lat": String(newMarkerLat),
+            "lon": String(newMarkerLong),
+            "link": String(document.getElementById('link').value),
         }
-    })
+        console.log("KISS OMK")
+
+        $.ajax({
+            url: addMemoryEndpoint,
+            type: "POST",
+            data: JSON.stringify(memory),
+            contentType: "application/json",
+            success: function (data) {
+                console.log("Memory Added")
+                //document.getElementById("addMemoryForm").reset();
+            }
+        })
+    
+    
+    
+    });
 });
