@@ -50,41 +50,19 @@ function getMemoriesForCalendar() {
     });
 }
 
-function buildContent(memory) {
-    const content = document.createElement("div");
-  
-    content.classList.add("property");
-    //memory = memory[0]
-
-
-    content.innerHTML = `
-      <div class="icon">
-          <i aria-hidden="true" class="fa-solid fa-person-falling-burst" title="${memory['title']}"></i>
-      </div>
-      <div class="details">
-          <div class="price">${memory['title']}</div>
-          <div class="address">${memory['link']}</div>
-          <div class="features">
-          <div>
-              <i aria-hidden="true" class="fas fa-bed" title="bedroom"></i>
-              <span class="fa-sr-only">bedroom</span>
-          </div>
-          </div>
-      </div>
-      `;
-    return content;
-}
-
 async function _populateMemories(res){
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
 
-  for (memory in res){
-      if (res[memory].length > 1){
-          //_populateSharedMemories(res[memory])
+    for (memory in res){
+        if (res[memory].length > 1){
           //add Support for shared memory here
           console.log("BIGGER THAN 1")
           continue
       }   
+      const pinBackground = new PinElement({
+        background: "#F0000FF",
+      });
+      
       console.log(memory)   
       const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
           map,

@@ -31,12 +31,13 @@ class addEntry(BaseModel):
     lat: float
     lon: float
     link: str
+    icon: str
 
 @app.post("/addmemory/")
 def read_item(
         item: addEntry
     ):
-    videoMemory = Video(title=item.title,location=item.location,timestamp=item.timestamp,lat=item.lat,lon = item.lon,link=item.link)
+    videoMemory = Video(title=item.title,location=item.location,timestamp=item.timestamp,lat=item.lat,lon=item.lon,link=item.link,icon=item.icon)
     redisSave(videoMemory)
     return {"message": f"Successfully Added {videoMemory.title}"}
 

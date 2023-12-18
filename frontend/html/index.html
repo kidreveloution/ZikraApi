@@ -60,7 +60,7 @@
             </div>
         
             <div>
-                <label for="timestamp">Timestamp:</label>
+                <label for="timestamp">Date:</label>
                 <input type="date" id="timestamp" name="timestamp" required>
             </div>
         
@@ -68,7 +68,28 @@
                 <label for="link">Link:</label>
                 <input type="url" id="link" name="link" required>
             </div>
-        
+
+            <div>
+                <label for="event_type">Select Event Type:</label>
+                <select name="eventCategory" id="eventCategory">
+                    <option value="fa fa-ambulance"></i> Casualties</option>
+                    <option value="fa fa-crosshairs"></i> Conflict</option>
+                    <option value="fa fa-building-o"></i> Damage</option>
+                    <option value="fa fa-bullhorn"></i> Protests and Rallies</option>
+                    <option value="fa fa-heart"></i> Humanitarian Aid</option>
+                    <option value="fa fa-home"></i> Daily Life</option>
+                    <option value="fa fa-truck"></i> Displacement</option>
+                    <option value="fa fa-child"></i> Children and Families</option>
+                    <option value="fa fa-hospital-o"></i> Healthcare</option>
+                    <option value="fa fa-university"></i> Cultural Impact</option>
+                    <option value="fa fa-globe"></i> International Response</option>
+                    <option value="fa fa-hand-peace-o"></i> Peace Efforts</option>
+                    <option value="fa fa-eye"></i> Eyewitness Accounts</option>
+                    <option value="fa fa-shield"></i> Military Presence</option>
+                    <option value="fa fa-lightbulb-o"></i> Utilities and Services</option>
+                    <option value="fa fa-graduation-cap"></i> Education</option>
+                </select>
+            </div>
             <button type="submit" id="submitMemoryBtn">Add Memory</button>
         </form>        
     </div> 
@@ -80,8 +101,8 @@
     <!-- Scripts -->
     <script src="../js/_SECRET.JS"></script>
     <script src="../js/map.js"></script>
-    <script src="../js/addMemory.js"></script>
-    <script src="../js/getMemories.js"></script>
+    <script src="../js/postMemory.js"></script>
+    <script src="../js/getMemory.js"></script>
     <script src="../js/pin.js"></script>
     <script src="../js/calendar.js"></script>
 

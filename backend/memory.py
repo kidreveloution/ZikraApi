@@ -23,6 +23,7 @@ def redisSave(memory):
     'lat': memory.lat,
     'lon': memory.lon,
     'link': memory.link,
+    'icon': memory.icon,
     'type': memory.__class__.__name__,
     })
     redis_connection.set(
@@ -51,7 +52,6 @@ def _getFormattedDate(datetime_object):
 def getMemories(geo_rectangle,timestamp):
     points = redis_connection.georadius("memories", longitude=geo_rectangle.center_long, latitude=geo_rectangle.center_lat, radius=geo_rectangle.radius, unit='km', withcoord=True)
 
-    #Edge case given the pikaday calls this
 
     in_rectangle = []
     for point in points:
@@ -59,7 +59,8 @@ def getMemories(geo_rectangle,timestamp):
         if geo_rectangle.sw_long <= lon <= geo_rectangle.ne_long and geo_rectangle.sw_lat <= lat <= geo_rectangle.ne_lat:
             in_rectangle.append(point[0])
     res = []
-
+    
+    #Edge case given the pikaday calls this
     if timestamp == None:
         for memory in in_rectangle:
             individual = redisLoad(memory)
@@ -76,6 +77,7 @@ def getMemories(geo_rectangle,timestamp):
     
     for memory in in_rectangle:
         individual = redisLoad(memory)
+        print(individual)
         ind_timestamp = individual['timestamp']
         ind_location = individual['location']
         memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
@@ -114,13 +116,14 @@ class GeoRectangle:
         return diagonal / 2 * 111  # Conversion to kilometers
 
 class Memory:
-    def __init__(self, title: str, location: str, timestamp, lat: float, lon: float, id=None):
+    def __init__(self, title: str, location: str, timestamp, lat: float, lon: float, icon: str,id=None):
         self.id = str(uuid.uuid4()) if id is None else id
         self.title = title
         self.location = location
         self.timestamp = timestamp
         self.lat = self._convert_to_float(lat)
         self.lon = self._convert_to_float(lon)
+        self.icon = icon
         
     @staticmethod
     def _convert_to_float(value):
@@ -130,8 +133,8 @@ class Memory:
             raise ValueError(f"Invalid value for a coordinate: {value}")
 
 class Video(Memory):
-    def __init__(self, title, location, timestamp, lat, lon, link):
-        super().__init__(title=title, location=location, timestamp=timestamp, lat=lat, lon=lon)
+    def __init__(self, title, location, timestamp, lat, lon, link, icon):
+        super().__init__(title=title, location=location, timestamp=timestamp, lat=lat, lon=lon, icon=icon)
         self.link = link
 
 class Audio(Memory):
@@ -148,12 +151,12 @@ class Text(Memory):
 
 # Example usage:
 if __name__ == "__main__":
-    # video = Video(title= "Alys Text", location= "Paris", timestamp= "2023-07-16T08:00:00Z", link= "http://example.com/video.mp4",lat= "48.8566",lon= "45.2322")
-    # redisSave(video)
+    video = Video(title= "Alys Text", location= "Paris", timestamp= "2023-07-16T08:00:00Z", link= "http://example.com/video.mp4",lat= "48.8566",lon= "45.2322",icon="NiggasPlans")
+    redisSave(video)
     # print(video.id)
     # retrieved_video = redisLoad(video.id)
     # print(retrieved_video)
-    obj = GeoRectangle(ne_lat=31.821606118113657,ne_long=35.51954600781248,sw_lat=31.130592290762717,sw_long=33.44312999218748,center_lat=31.476099204438185,center_long=34.48133799999998)
-    print(getMemories(obj,""))
+    # obj = GeoRectangle(ne_lat=31.821606118113657,ne_long=35.51954600781248,sw_lat=31.130592290762717,sw_long=33.44312999218748,center_lat=31.476099204438185,center_long=34.48133799999998)
+    # print(getMemories(obj,""))
     # for id in getMemories(obj):
     #     print(redisLoad(id))

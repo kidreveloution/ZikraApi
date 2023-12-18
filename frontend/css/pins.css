@@ -3,22 +3,16 @@
  * Copyright 2019 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
- :root {
-    --building-color: #FF9800;
-    --house-color: #0288D1;
-    --shop-color: #7B1FA2;
-    --warehouse-color: #558B2F;
-  }
-  
+
 
 
   
   /*
    * Property styles in unhighlighted state.
    */
-  .property {
+  .memory {
     align-items: center;
-    background-color: #ff0000;
+    background-color: #ffffff;
     border-radius: 50%;
     color: #263238;
     display: flex;
@@ -32,11 +26,14 @@
     transition: all 0.3s ease-out;
     width: 30px;
   }
+  .memory .details .title{
+    color: #00aaff;
+  }
   
-  .property::after {
+  .memory::after {
     border-left: 9px solid transparent;
     border-right: 9px solid transparent;
-    border-top: 9px solid #ff0000;
+    border-top-left-radius: 9px solid #000000;
     content: "";
     height: 0;
     left: 50%;
@@ -52,29 +49,29 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    color: #ff0000;
+    color: #d30000;
   }
   
-  .property .icon svg {
+  .memory .icon svg {
     height: 20px;
     width: auto;
   }
   
-  .property .details {
+  .memory .details {
     display: none;
     flex-direction: column;
     flex: 1;
   }
   
   
-  .property .features {
+  .memory .features {
     align-items: flex-end;
     display: flex;
     flex-direction: row;
     gap: 10px;
   }
   
-  .property .features > div {
+  .memory .features > div {
     align-items: center;
     background: #F5F5F5;
     border-radius: 5px;
@@ -88,8 +85,8 @@
   /*
    * Property styles in highlighted state.
    */
-  .property.highlight {
-    background-color: #FFFFFF;
+  .memory.highlight {
+    background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
     height: 80px;
@@ -97,15 +94,15 @@
     width: auto;
   }
   
-  .property.highlight::after {
+  .memory.highlight::after {
     border-top: 9px solid #FFFFFF;
   }
   
-  .property.highlight .details {
+  .memory.highlight .details {
     display: flex;
   }
   
-  .property.highlight .icon svg {
+  .memory.highlight .icon svg {
     width: 50px;
     height: 50px;
   }
