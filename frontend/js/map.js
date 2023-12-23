@@ -21,7 +21,7 @@ google.maps.event.addListener(map, 'dragend', function() {
     updatePikadayWithNewEvents()
 });
 
-google.maps.event.addListener(map, 'zoom_changed', function() {
+google.maps.event.addListener(map, 'idle', function() {
     hideMarkers(); //Hiding All Markers
     showMemories(showDate,map.getBounds()) // Showing all markers in bounds
 });
