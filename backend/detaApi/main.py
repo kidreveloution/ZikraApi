@@ -5,28 +5,23 @@ from memory import *
 from pydantic import BaseModel
 from fastapi import FastAPI, Query
 import os
+
 app = FastAPI()
 
-origins = [
-    "http://192.168.50.189:8080",
-    "http://127.0.0.1:8080",
-    "https://ahlan-salati.surge.sh/",
-    "https://ahlan-salati.surge.sh",
-    "http://localhost:3000",
-    "*"
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
+
 
 class addEntry(BaseModel):
     title: str
-    location: str 
+    location: str
     timestamp: str
     lat: float
     lon: float
@@ -44,7 +39,7 @@ def read_item(
 @app.post("/uploadMemory/")
 async def upload(
         memoryMeta: str = Form(...),
-        file: UploadFile = File(...) 
+        file: UploadFile = File(...)
     ):
     memoryMeta = json.loads(memoryMeta)
     videoMemory = Video(**memoryMeta)
@@ -90,3 +85,5 @@ def get_item(ne_lat: float = Query(None),
     # Call your getMemories function with the retrieved parameters
     print(timestamp)
     return getMemories(GeoRectangle(ne_lat, ne_long, sw_lat, sw_long, center_lat, center_long), timestamp)
+
+
