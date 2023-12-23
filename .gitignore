@@ -11,6 +11,7 @@ amplify/backend/amplify-meta.json
 amplify/backend/.temp
 build/
 dist/
+backend/lambdaAPI/lib
 node_modules/
 aws-exports.js
 awsconfiguration.json
