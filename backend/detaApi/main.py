@@ -28,6 +28,7 @@ class addEntry(BaseModel):
     link: str
     icon: str
 
+
 @app.post("/addmemory/")
 def read_item(
         item: addEntry
