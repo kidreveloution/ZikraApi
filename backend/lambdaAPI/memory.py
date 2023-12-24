@@ -6,10 +6,12 @@ import uuid
 from datetime import datetime
 import math
 
+import os
+
 redis_connection = redis.Redis(
-  host='redis-15418.c326.us-east-1-3.ec2.cloud.redislabs.com',
-  port=15418,
-  password='J8pLJXDDgYih98pcosBZeDCUUx4zF2gK')
+  host=os.environ['REDIS_HOST'],
+  port=os.environ['REDIS_PORT'],
+  password=os.environ['REDIS_PASS'])
 
 def redisLoad(id):
     memory_data = redis_connection.get(id)  
@@ -154,14 +156,5 @@ class Text(Memory):
 
 # Example usage:
 if __name__ == "__main__":
-    # video = Video(title= "Alys Text", location= "Paris", timestamp= "2023-07-16T08:00:00Z", link= "http://example.com/video.mp4",lat= "48.8566",lon= "45.2322",icon="NiggasPlans")
-    # redisSave(video)
-    # print(video.id)
-    # retrieved_video = redisLoad(video.id)
-    # print(retrieved_video)
-    # obj = GeoRectangle(ne_lat=31.821606118113657,ne_long=35.51954600781248,sw_lat=31.130592290762717,sw_long=33.44312999218748,center_lat=31.476099204438185,center_long=34.48133799999998)
-    # print(getMemories(obj,""))
-    # for id in getMemories(obj):
-    #     print(redisLoad(id))
     redis_connection.set('MEGAMIND', 'Triamsu')
     print(redis_connection.get('MEGAMIND'))
