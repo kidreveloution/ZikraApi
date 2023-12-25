@@ -6,11 +6,27 @@ import uuid
 from datetime import datetime
 import math
 
-redis_connection = redis.Redis(
-  host='redis-15418.c326.us-east-1-3.ec2.cloud.redislabs.com',
-  port=15418,
-  password='J8pLJXDDgYih98pcosBZeDCUUx4zF2gK')
+import redis
 
+
+
+
+def getAllMemoriesTimed(timestamp):
+    res = []
+
+    timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
+
+    for key in redis_connection.scan_iter("*"):
+        try:
+            individual=redisLoad(key)
+            ind_timestamp = individual['timestamp']
+            memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
+            if (memDate == timestamp):
+                res.append(individual)
+        except:
+            pass
+    return res
+    
 def redisLoad(id):
     memory_data = redis_connection.get(id)  
     if memory_data:
@@ -163,5 +179,8 @@ if __name__ == "__main__":
     # print(getMemories(obj,""))
     # for id in getMemories(obj):
     #     print(redisLoad(id))
-    redis_connection.set('MEGAMIND', 'Triamsu')
-    print(redis_connection.get('MEGAMIND'))
+    # redis_connection.set('MEGAMIND', 'Triamsu')
+    # print(redis_connection.get('MEGAMIND'))
+    print(getAllMemoriesTimed("2023-12-01"))
+
+

@@ -1,6 +1,6 @@
 let markersArray = [];
 
-function showMemories(timestamp,bounds){
+function getMemoriesCalandar(timestamp,bounds){
         var dataStruct ={
             "ne_lat": bounds.getNorthEast().lat(),
             "ne_long": bounds.getNorthEast().lng(),
@@ -22,7 +22,22 @@ function showMemories(timestamp,bounds){
             }
         })
 }
+function showAllMemories(timestamp){
+    var dataStruct ={
+        "timestamp": timestamp,
+    }
 
+    $.ajax({
+        url: showAllMemoriesEndpoint,
+        type: "GET",
+        data: dataStruct,
+        success: function (res) {
+            _populateMemories(res)
+            console.log("GOOD MEMORY PULL")
+            console.log(res)
+        }
+    })
+}
 function getMemoriesForCalendar() {
     return new Promise(async (resolve, reject) => {
         var bounds = await _getBounds();

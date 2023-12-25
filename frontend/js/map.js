@@ -15,16 +15,16 @@ map = new google.maps.Map(document.getElementById('map'), {
     disableDefaultUI: false
 });
 
-google.maps.event.addListener(map, 'dragend', function() {
-    hideMarkers(); //Hiding All Markers
-    showMemories(showDate,map.getBounds()) // Showing all markers in bounds
-    updatePikadayWithNewEvents()
-});
+// google.maps.event.addListener(map, 'dragend', function() {
+//     hideMarkers(); //Hiding All Markers
+//     showMemories(showDate,map.getBounds()) // Showing all markers in bounds
+//     updatePikadayWithNewEvents()
+// });
 
-google.maps.event.addListener(map, 'idle', function() {
-    hideMarkers(); //Hiding All Markers
-    showMemories(showDate,map.getBounds()) // Showing all markers in bounds
-});
+// google.maps.event.addListener(map, 'idle', function() {
+//     hideMarkers(); //Hiding All Markers
+//     showMemories(showDate,map.getBounds()) // Showing all markers in bounds
+// });
 
 // Function to activate map click event
 function activateMapClick() {

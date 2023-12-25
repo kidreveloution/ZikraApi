@@ -10,8 +10,8 @@ from mangum import Mangum
 app = FastAPI()
 handler = Mangum(app)
 
+# CORS configuration
 origins = ["*"]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -19,7 +19,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 class addEntry(BaseModel):
     title: str
@@ -38,9 +37,25 @@ async def root():
 def read_item(
         item: addEntry
     ):
-    videoMemory = Video(title=item.title,location=item.location,timestamp=item.timestamp,lat=item.lat,lon=item.lon,link=item.link,icon=item.icon)
+    videoMemory = Video(
+        title=item.title,
+        location=item.location,
+        timestamp=item.timestamp,
+        lat=item.lat,
+        lon=item.lon,
+        link=item.link,
+        icon=item.icon
+        )
     redisSave(videoMemory)
-    return {"message": f"Successfully Added {videoMemory.title}"}
+    response = {
+        'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Origin': '*'
+        },
+        'body': json.dumps({'message': f"Successfully Added {videoMemory.title}"})
+    }
+    #return {"message": f"Successfully Added {videoMemory.title}"}
+    return response
 
 @app.post("/uploadMemory/")
 async def upload(
@@ -92,4 +107,7 @@ def get_item(ne_lat: float = Query(None),
     print(timestamp)
     return getMemories(GeoRectangle(ne_lat, ne_long, sw_lat, sw_long, center_lat, center_long), timestamp)
 
-
+@app.get("/getAllMemories")
+def get_item(timestamp: str = None):
+    # Call All Memories given timestamp
+    return getAllMemoriesTimed(timestamp)

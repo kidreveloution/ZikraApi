@@ -28,13 +28,33 @@ class addEntry(BaseModel):
     link: str
     icon: str
 
+@app.get("/")
+async def root():
+    return {"message": "Welcome to Zikra DEV"}
+
 @app.post("/addmemory/")
 def read_item(
         item: addEntry
     ):
-    videoMemory = Video(title=item.title,location=item.location,timestamp=item.timestamp,lat=item.lat,lon=item.lon,link=item.link,icon=item.icon)
+    videoMemory = Video(
+        title=item.title,
+        location=item.location,
+        timestamp=item.timestamp,
+        lat=item.lat,
+        lon=item.lon,
+        link=item.link,
+        icon=item.icon
+        )
     redisSave(videoMemory)
-    return {"message": f"Successfully Added {videoMemory.title}"}
+    response = {
+        'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Origin': '*'
+        },
+        'body': json.dumps({'message': 'CORS enabled'})
+    }
+    #return {"message": f"Successfully Added {videoMemory.title}"}
+    return response
 
 @app.post("/uploadMemory/")
 async def upload(

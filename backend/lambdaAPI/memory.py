@@ -9,10 +9,28 @@ import math
 import os
 
 redis_connection = redis.Redis(
-  host=os.environ['REDIS_HOST'],
-  port=os.environ['REDIS_PORT'],
-  password=os.environ['REDIS_PASS'])
+  host=str(os.environ['REDIS_HOST']),
+  port=str(os.environ['REDIS_PORT']),
+  password=str(os.environ['REDIS_PASSWORD'])
+  )
 
+
+def getAllMemoriesTimed(timestamp):
+    res = []
+
+    timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
+
+    for key in redis_connection.scan_iter("*"):
+        try:
+            individual=redisLoad(key)
+            ind_timestamp = individual['timestamp']
+            memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
+            if (memDate == timestamp):
+                res.append(individual)
+        except:
+            pass
+    return res
+    
 def redisLoad(id):
     memory_data = redis_connection.get(id)  
     if memory_data:
@@ -51,8 +69,6 @@ def _getFormattedDate(datetime_object):
         dayNum = "0"+str(dayNum)
     formatted_str = str(dayOfWeek)+" "+str(month)+" "+str(dayNum)+" "+str(year)
     return(formatted_str)
-
-
 
 def getMemories(geo_rectangle,timestamp):
     points = redis_connection.georadius("memories", longitude=geo_rectangle.center_long, latitude=geo_rectangle.center_lat, radius=geo_rectangle.radius, unit='km', withcoord=True)
@@ -156,5 +172,6 @@ class Text(Memory):
 
 # Example usage:
 if __name__ == "__main__":
-    redis_connection.set('MEGAMIND', 'Triamsu')
-    print(redis_connection.get('MEGAMIND'))
+    redis_connection.set('MEGAMIND4', 'Triamsusds')
+    print(redis_connection.get('MEGAMIND4'))
+    # getMemoriesV2(9)
