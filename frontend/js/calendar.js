@@ -14,7 +14,8 @@ function initializeOrUpdatePikaday(events) {
             console.log(events);
             showDate = date.toISOString();
             hideMarkers()
-            showMemories(showDate,map.getBounds())
+            getMemoriesCalandar(showDate,map.getBounds())
+            showAllMemories(showDate)
 
         },
         events: events
