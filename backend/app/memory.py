@@ -15,9 +15,10 @@ import os
 #   )
 
 redis_connection = redis.Redis(
-  host='redis-18146.c28845.us-east-2-mz.ec2.cloud.rlrcp.com',
-  port=18146,
-  password='NOoPPSfJTB7RUOhXSyVelyhCa8qUVd5p')
+  host=os.getenv('REDIS_HOST'),
+  port=os.getenv('REDIS_PORT'),
+  password=os.getenv('REDIS_PASSWORD')
+)
 
 
 def getAllMemoriesTimed(timestamp):
