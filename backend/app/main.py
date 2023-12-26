@@ -96,7 +96,7 @@ def get_item(ne_lat: float = Query(None),
              center_long: float = Query(None),
              timestamp: str = None):
     # Call your getMemories function with the retrieved parameters
-    return(timestamp)
+    #return(timestamp)
     return getMemories(GeoRectangle(ne_lat, ne_long, sw_lat, sw_long, center_lat, center_long), timestamp)
 
 @app.get("/getAllMemories/")

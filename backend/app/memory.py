@@ -78,47 +78,54 @@ def _getFormattedDate(datetime_object):
 def getMemories(geo_rectangle,timestamp):
     points = redis_connection.georadius("memories", longitude=geo_rectangle.center_long, latitude=geo_rectangle.center_lat, radius=geo_rectangle.radius, unit='km', withcoord=True)
 
-
-    in_rectangle = []
-    for point in points:
-        lon, lat = point[1]
-        if geo_rectangle.sw_long <= lon <= geo_rectangle.ne_long and geo_rectangle.sw_lat <= lat <= geo_rectangle.ne_lat:
-            in_rectangle.append(point[0])
-    res = []
+    try:
+        in_rectangle = []
+        for point in points:
+            lon, lat = point[1]
+            if geo_rectangle.sw_long <= lon <= geo_rectangle.ne_long and geo_rectangle.sw_lat <= lat <= geo_rectangle.ne_lat:
+                in_rectangle.append(point[0])
+        res = []
+    except:
+        return("DID NOT PASS FIRST")
     
     #Edge case given the pikaday calls this
-    if timestamp == None:
+    try:
+        if timestamp == None:
+            for memory in in_rectangle:
+                individual = redisLoad(memory)
+                datetime_object = datetime.strptime(individual["timestamp"], '%Y-%m-%d')
+                formattedDate = _getFormattedDate(datetime_object=datetime_object)
+                if formattedDate in res:
+                    pass
+                else:
+                    res.append(formattedDate)
+            return res
+    except:
+        return("DID NOT PASS SECOND")
+    
+    try:
+        locations= {}
+        timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
+        
         for memory in in_rectangle:
             individual = redisLoad(memory)
-            datetime_object = datetime.strptime(individual["timestamp"], '%Y-%m-%d')
-            formattedDate = _getFormattedDate(datetime_object=datetime_object)
-            if formattedDate in res:
-                pass
-            else:
-                res.append(formattedDate)
-        return res
-    
-    locations= {}
-    timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
-    
-    for memory in in_rectangle:
-        individual = redisLoad(memory)
-        print(individual)
-        ind_timestamp = individual['timestamp']
-        ind_location = individual['location']
-        memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
-        print(memDate, timestamp)
-        if (memDate == timestamp):
-            res.append(individual)
-            print("ADDED TIME STAMP",timestamp)
+            print(individual)
+            ind_timestamp = individual['timestamp']
+            ind_location = individual['location']
+            memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
+            print(memDate, timestamp)
+            if (memDate == timestamp):
+                res.append(individual)
+                print("ADDED TIME STAMP",timestamp)
 
-        if ind_location in locations:
-            locations[ind_location].append(individual)
-        else:
-            locations[ind_location] = [individual]
-    pp = pprint.PrettyPrinter(indent=4)
-    #pp.pprint(locations)
-    return (res)        
+            if ind_location in locations:
+                locations[ind_location].append(individual)
+            else:
+                locations[ind_location] = [individual]
+        return (res)    
+    except:
+        return("DID NOT PASS THIRD")
+  
 
 class GeoRectangle:
     def __init__(self, ne_lat, ne_long, sw_lat, sw_long,center_lat,center_long):
