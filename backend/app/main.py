@@ -87,7 +87,7 @@ def get_item(itemId: str) -> Any:
 # "center_lat":bounds.getCenter().lat(),
 # "center_long":bounds.getCenter().lng(),
 # "timestamp": timestamp,
-@app.get("/getMemories")
+@app.get("/getMemories/")
 def get_item(ne_lat: float = Query(None),
              ne_long: float = Query(None),
              sw_lat: float = Query(None),
@@ -96,10 +96,10 @@ def get_item(ne_lat: float = Query(None),
              center_long: float = Query(None),
              timestamp: str = None):
     # Call your getMemories function with the retrieved parameters
-    print(timestamp)
+    return(timestamp)
     return getMemories(GeoRectangle(ne_lat, ne_long, sw_lat, sw_long, center_lat, center_long), timestamp)
 
-@app.get("/getAllMemories")
+@app.get("/getAllMemories/")
 def get_item(timestamp: str = None):
     # Call All Memories given timestamp
     return getAllMemoriesTimed(timestamp)
