@@ -9,7 +9,7 @@ var newMarkerLong;
 
 map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
-    mapId: "bc55fc2e7ebbdda0",
+    mapId: GOOGLE_MAP_ID,
     center: { lat: 31.476737, lng: 34.4813380 }, 
     streetViewControl: false,
     disableDefaultUI: false
