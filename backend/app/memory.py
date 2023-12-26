@@ -16,7 +16,7 @@ import os
 
 redis_connection = redis.Redis(
   host=os.getenv('REDIS_HOST'),
-  port=int(os.getenv('REDIS_PORT')),
+  port=18146,
   password=os.getenv('REDIS_PASSWORD')
 )
 
