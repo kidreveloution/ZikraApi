@@ -17,13 +17,13 @@ map = new google.maps.Map(document.getElementById('map'), {
 
 google.maps.event.addListener(map, 'dragend', function() {
     hideMarkers(); //Hiding All Markers
-    showMemories(showDate,map.getBounds()) // Showing all markers in bounds
+    //showAllMemories(showDate) // Showing all markers in bounds
     updatePikadayWithNewEvents()
 });
 
-google.maps.event.addListener(map, 'idle', function() {
+google.maps.event.addListener(map, 'zoom_changed', function() {
     hideMarkers(); //Hiding All Markers
-    showMemories(showDate,map.getBounds()) // Showing all markers in bounds
+    //showAllMemories(showDate) // Showing all markers in bounds
 });
 
 // Function to activate map click event
