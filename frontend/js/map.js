@@ -5,25 +5,24 @@ var map;
 var clickListener; 
 var marker;
 var newMarkerLat;
-var newMarkerLong;
 
 map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
     mapId: GOOGLE_MAP_ID,
     center: { lat: 31.476737, lng: 34.4813380 }, 
     streetViewControl: false,
-    disableDefaultUI: false
-});
+    disableDefaultUI: false});
 
 google.maps.event.addListener(map, 'dragend', function() {
-    hideMarkers(); //Hiding All Markers
+    //hideMarkers(); //Hiding All Markers
     //showAllMemories(showDate) // Showing all markers in bounds
     updatePikadayWithNewEvents()
 });
 
 google.maps.event.addListener(map, 'zoom_changed', function() {
-    hideMarkers(); //Hiding All Markers
+    //hideMarkers(); //Hiding All Markers
     //showAllMemories(showDate) // Showing all markers in bounds
+    updatePikadayWithNewEvents()
 });
 
 // Function to activate map click event

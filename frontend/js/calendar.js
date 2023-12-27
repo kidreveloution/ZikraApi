@@ -15,7 +15,7 @@ function initializeOrUpdatePikaday(events) {
             showDate = date.toISOString();
             hideMarkers()
             getMemoriesCalandar(showDate,map.getBounds())
-            //showAllMemories(showDate)
+            showAllMemories(showDate)
 
         },
         events: events
