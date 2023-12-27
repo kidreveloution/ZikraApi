@@ -86,7 +86,7 @@ def getMemories(geo_rectangle,timestamp):
                 in_rectangle.append(point[0])
         res = []
     except Exception as e:
-        return("DID NOT PASS FIRST",e)
+        return("DID NOT PASS FIRST"+str(e))
     
     
     #Edge case given the pikaday calls this
@@ -102,7 +102,7 @@ def getMemories(geo_rectangle,timestamp):
                     res.append(formattedDate)
             return res
     except Exception as e:
-        return("DID NOT PASS SECOND",e)
+        return("DID NOT PASS SECOND"+str(e))
     
     try:
         locations= {}
@@ -125,7 +125,7 @@ def getMemories(geo_rectangle,timestamp):
                 locations[ind_location] = [individual]
         return (res)    
     except Exception as e:
-        return("DID NOT PASS THIRD",e)
+        return("DID NOT PASS THIRD"+str(e))
     
   
 
