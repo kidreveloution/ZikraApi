@@ -84,7 +84,7 @@ function getInstagramImageEmbedCode(instagramLink) {
 
 function getInstagramEmbedCode(instagramLink) {
     // Check if the provided link is an Instagram image or video link.
-    if (instagramLink.match(/instagram\.com\/p\/[^/]+\/?/)) {
+    if (instagramLink.match(/instagram\.com\/p\/[^/]+\/(\?.*)?/)) {
         // Extract the image or video URL.
         const mediaURL = `${instagramLink.split('/').slice(0, -1).join('/')}/media/?size=l`;
 
