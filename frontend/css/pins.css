@@ -57,8 +57,10 @@
   border-radius: 8px;
   box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
   height: 80px;
-  padding: 8px 15px;
+  /* padding: 8px 15px; */
   width: auto;
+  pointer-events: none; /* Makes the image unclickable */
+
 }
 
 .memory.highlight::after {
@@ -76,12 +78,14 @@
 
 /* Styles for .image */
 .details .image {
-  width: 40px; /* Set a fixed width for the image */
-  height: 40px; /* Set a fixed height for the image */
+  width: 80px; /* Set a fixed width for the image */
+  height: 80px; /* Set a fixed height for the image */
   overflow: hidden; /* Hide any overflow if the image exceeds the specified dimensions */
 }
 
 .details .image img {
   width: 100%; /* Ensure the image takes up 100% of the available width */
   height: 100%; /* Ensure the image takes up 100% of the available height */
+  object-fit: cover; /* Resize the image to cover the container while maintaining its aspect ratio */
+
 }

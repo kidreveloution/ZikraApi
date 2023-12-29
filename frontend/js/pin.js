@@ -43,7 +43,6 @@ function buildContent(memory) {
             <i aria-hidden="true" class="fa-solid ${memory['icon']}" title="${memory['title']}"></i>
         </div>
         <div class="details">
-            <div class="title">${memory['title']}</div>
             <div class="link">
             <a href="${memory['link']}" target="_blank"> <!-- Use target="_blank" to open link in a new tab -->
                 <div class="image">${imgEmbed}</div>
