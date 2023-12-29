@@ -23,7 +23,10 @@ redis_connection = redis.Redis(
 def getAllMemoriesTimed(timestamp):
     res = []
 
-    timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
+    try:
+        timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
+    except ValueError:
+        timestamp = datetime.strptime(timestamp, '%a %b %d %Y %H:%M:%S GM')
 
     for key in redis_connection.scan_iter("*"):
         try:
