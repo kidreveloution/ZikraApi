@@ -22,6 +22,7 @@ function getMemoriesCalandar(timestamp,bounds){
             }
         })
 }
+
 function showAllMemories(timestamp){
     var dataStruct ={
         "timestamp": timestamp,
@@ -38,6 +39,7 @@ function showAllMemories(timestamp){
         }
     })
 }
+
 function getMemoriesForCalendar() {
     return new Promise(async (resolve, reject) => {
         var bounds = await _getBounds();
@@ -89,7 +91,7 @@ async function _populateMemories(res){
       markersArray.push(AdvancedMarkerElement)
 
       AdvancedMarkerElement.addListener("click", () => {
-        toggleHighlight(AdvancedMarkerElement, memory);
+        toggleHighlight(AdvancedMarkerElement);
       });
   
   }    
@@ -104,7 +106,7 @@ function _populateSharedMemories(sharedMemory){
 
 }
 
-function toggleHighlight(markerView, property) {
+function toggleHighlight(markerView) {
     if (markerView.content.classList.contains("highlight")) {
       markerView.content.classList.remove("highlight");
       markerView.zIndex = null;

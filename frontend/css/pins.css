@@ -1,113 +1,87 @@
-/**
- * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+/* Shared styles for .memory */
+.memory {
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 50%;
+  color: #bd2f2f;
+  display: flex;
+  font-size: 14px;
+  gap: 15px;
+  height: 30px;
+  justify-content: center;
+  padding: 4px;
+  position: relative;
+  transition: all 0.3s ease-out;
+  width: 30px;
+}
 
+.memory .details .title {
+  color: #00aaff;
+}
 
+.memory::after {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #bd2f2f;
+  content: "";
+  height: 0;
+  left: 50%;
+  position: absolute;
+  top: 95%;
+  transform: translateX(-50%);
+  transition: all 0.3s ease-out;
+  width: 0;
+  z-index: 1;
+}
 
-  
-  /*
-   * Property styles in unhighlighted state.
-   */
-  .memory {
-    align-items: center;
-    background-color: #ffffff;
-    border-radius: 50%;
-    color: #263238;
-    display: flex;
-    font-size: 14px;
-    gap: 15px;
-    height: 30px;
-    justify-content: center;
-    padding: 4px;
-    position: relative;
-    position: relative;
-    transition: all 0.3s ease-out;
-    width: 30px;
-  }
-  .memory .details .title{
-    color: #00aaff;
-  }
-  
-  .memory::after {
-    border-left: 9px solid transparent;
-    border-right: 9px solid transparent;
-    border-top-left-radius: 9px solid #000000;
-    content: "";
-    height: 0;
-    left: 50%;
-    position: absolute;
-    top: 95%;
-    transform: translate(-50%, 0);
-    transition: all 0.3s ease-out;
-    width: 0;
-    z-index: 1;
-  }
-  
-  .memory .icon {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    color: #d30000;
-  }
-  
-  .memory .icon svg {
-    height: 20px;
-    width: auto;
-  }
-  
-  .memory .details {
-    display: none;
-    flex-direction: column;
-    flex: 1;
-  }
-  
-  
-  .memory .features {
-    align-items: flex-end;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-  }
-  
-  .memory .features > div {
-    align-items: center;
-    background: #F5F5F5;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    display: flex;
-    font-size: 10px;
-    gap: 5px;
-    padding: 5px;
-  }
-  
-  /*
-   * Property styles in highlighted state.
-   */
-  .memory.highlight {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
-    height: 80px;
-    padding: 8px 15px;
-    width: auto;
-  }
-  
-  .memory.highlight::after {
-    border-top: 9px solid #FFFFFF;
-  }
-  
-  .memory.highlight .details {
-    display: flex;
-  }
-  
-  .memory.highlight .icon svg {
-    width: 50px;
-    height: 50px;
-  }
-  
+.memory .icon {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
 
+.memory .icon svg {
+  height: 20px;
+  width: auto;
+}
 
+.memory .details {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Highlighted state styles for .memory */
+.memory.highlight {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+  height: 80px;
+  padding: 8px 15px;
+  width: auto;
+}
+
+.memory.highlight::after {
+  border-top: 9px solid #ffffff;
+}
+
+.memory.highlight .details {
+  display: flex;
   
-  
+}
+
+.memory.highlight .icon {
+  display: none;
+}
+
+/* Styles for .image */
+.details .image {
+  width: 40px; /* Set a fixed width for the image */
+  height: 40px; /* Set a fixed height for the image */
+  overflow: hidden; /* Hide any overflow if the image exceeds the specified dimensions */
+}
+
+.details .image img {
+  width: 100%; /* Ensure the image takes up 100% of the available width */
+  height: 100%; /* Ensure the image takes up 100% of the available height */
+}
