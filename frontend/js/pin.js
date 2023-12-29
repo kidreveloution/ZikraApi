@@ -33,7 +33,23 @@ function buildContent(memory) {
     //memory = memory[0]
     console.log(memory["icon"])
     console.log(memory)
+    
 
+
+    if (memory['link'].includes("instagram")) {
+        imgEmbed= getInstagramImageEmbedCode(memory['link'])
+        content.innerHTML = `
+        <div class="icon">
+            <i aria-hidden="true" class="fa-solid ${memory['icon']}" title="${memory['title']}"></i>
+        </div>
+        <div class="details">
+            <div class="title">${memory['title']}</div>
+            <div class="link">${memory['link']}</div>
+            <div class="image">${imgEmbed}</div>
+        </div>
+        `;
+    
+    }else{
 
     content.innerHTML = `
       <div class="icon">
@@ -42,10 +58,25 @@ function buildContent(memory) {
       <div class="details">
           <div class="title">${memory['title']}</div>
           <div class="link">${memory['link']}</div>
-
           </div>
       </div>
       `;
+    }
     return content;
+}
+
+function getInstagramImageEmbedCode(instagramLink) {
+    // Check if the provided link is an Instagram image link (direct image link).
+    if (instagramLink.match(/instagram\.com\/p\/[^/]+\/?/)) {
+        // Extract the image URL.
+        const imageURL = instagramLink.split('/').slice(0, -1).join('/') + '/media/?size=l';
+        
+        // Create HTML code to embed the image.
+        const embedCode = `<img src="${imageURL}" alt="Instagram Image">`;
+        
+        return embedCode;
+    } else {
+        return 'Invalid Instagram image link. Please provide a direct image link.';
+    }
 }
 
