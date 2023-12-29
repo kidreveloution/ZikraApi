@@ -34,66 +34,11 @@
 
     <!-- Map Container -->
     <div id="map"></div>
-
-    <!-- Add Memory Button -->
-    <div id="memoryBtnDiv">
-        <button class="add-memory-btn" id="addMemoryBtn" >
-            <i class="fas fa-plus" id="icon"></i>
-        </button>
-    </div>  
     
     <!-- Date Picker -->
     <div id="dateDiv">
         <input type="text" id="datepicker" readonly>
     </div>
-
-    <!-- Add Memory Form -->
-    <div id="addMemDiv" style="display: none;">
-        <form class="addMemoryForm" id="addMemoryForm" >
-            <div>
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required>
-            </div>
-            
-            <div>
-                <label for="location">Choose Location on Map</label>
-                <p type="text" id="location" name="location" readonly> </p>
-            </div>
-        
-            <div>
-                <label for="timestamp">Date:</label>
-                <input type="date" id="timestamp" name="timestamp" required>
-            </div>
-        
-            <div>
-                <label for="link">Link:</label>
-                <input type="url" id="link" name="link" required>
-            </div>
-
-            <div>
-                <label for="event_type">Select Event Type:</label>
-                <select name="eventCategory" id="eventCategory">
-                    <option value="fa fa-ambulance"></i> Casualties</option>
-                    <option value="fa fa-crosshairs"></i> Conflict</option>
-                    <option value="fa fa-building-o"></i> Damage</option>
-                    <option value="fa fa-bullhorn"></i> Protests and Rallies</option>
-                    <option value="fa fa-heart"></i> Humanitarian Aid</option>
-                    <option value="fa fa-home"></i> Daily Life</option>
-                    <option value="fa fa-truck"></i> Displacement</option>
-                    <option value="fa fa-child"></i> Children and Families</option>
-                    <option value="fa fa-hospital-o"></i> Healthcare</option>
-                    <option value="fa fa-university"></i> Cultural Impact</option>
-                    <option value="fa fa-globe"></i> International Response</option>
-                    <option value="fa fa-hand-peace-o"></i> Peace Efforts</option>
-                    <option value="fa fa-eye"></i> Eyewitness Accounts</option>
-                    <option value="fa fa-shield"></i> Military Presence</option>
-                    <option value="fa fa-lightbulb-o"></i> Utilities and Services</option>
-                    <option value="fa fa-graduation-cap"></i> Education</option>
-                </select>
-            </div>
-            <button type="submit" id="submitMemoryBtn">Add Memory</button>
-        </form>        
-    </div> 
 
     <!-- External Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>

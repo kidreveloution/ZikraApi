@@ -20,6 +20,8 @@ function initializeOrUpdatePikaday(events) {
         },
         events: events
     });
+    picker.setDate(new Date('6-Oct-2023'));
+    showAllMemories(new Date('6-Oct-2023'));
 }
 
 // Function to get dates and update Pikaday
