@@ -1,12 +1,8 @@
-import pprint
-
 import redis
 import json
 import uuid
 from datetime import datetime
 import math
-
-import os
 
 # redis_connection = redis.Redis(
 #   host=str(os.environ['REDIS_HOST']),
@@ -34,7 +30,7 @@ def getAllMemoriesTimed(timestamp):
             ind_timestamp = individual['timestamp']
             memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
             if (memDate == timestamp):
-                res.append(individual)
+                res.append(key,individual)
         except:
             pass
     return res
@@ -113,14 +109,11 @@ def getMemories(geo_rectangle,timestamp):
         
         for memory in in_rectangle:
             individual = redisLoad(memory)
-            print(individual)
             ind_timestamp = individual['timestamp']
             ind_location = individual['location']
             memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
-            print(memDate, timestamp)
             if (memDate == timestamp):
                 res.append(individual)
-                print("ADDED TIME STAMP",timestamp)
 
             if ind_location in locations:
                 locations[ind_location].append(individual)

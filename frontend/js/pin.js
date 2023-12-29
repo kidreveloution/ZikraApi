@@ -31,8 +31,7 @@ function buildContent(memory) {
   
     content.classList.add("memory");
     //memory = memory[0]
-    console.log(memory["icon"])
-    console.log(memory)
+
     
 
 

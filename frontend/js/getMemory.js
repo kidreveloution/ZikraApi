@@ -34,8 +34,6 @@ function showAllMemories(timestamp){
         data: dataStruct,
         success: function (res) {
             _populateMemories(res)
-            console.log("GOOD MEMORY PULL")
-            console.log(res)
         }
     })
 }
@@ -57,7 +55,6 @@ function getMemoriesForCalendar() {
             type: "GET",
             data: dataStruct,
             success: function (res) {
-                console.log("THIS IS API RETURNS",res)
                 resolve(res); // Resolve the promise with the response
             },
             error: function (err) {
@@ -73,15 +70,12 @@ async function _populateMemories(res){
     for (memory in res){
         if (res[memory].length > 1){
           //add Support for shared memory here
-          console.log("BIGGER THAN 1")
           continue
       }   
       const pinBackground = new PinElement({
         background: "#F0000FF",
       });
-      
-      console.log(memory)   
-      const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
+        const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
           map,
           content: buildContent(res[memory]),
           position: { lat: res[memory]["lat"], lng: res[memory]["lon"] },

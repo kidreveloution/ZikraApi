@@ -11,7 +11,6 @@ function initializeOrUpdatePikaday(events) {
     picker = new Pikaday({
         field: document.getElementById('datepicker'),
         onSelect: function(date) {
-            console.log(events);
             showDate = date.toISOString();
             hideMarkers()
             getMemoriesCalandar(showDate,map.getBounds())

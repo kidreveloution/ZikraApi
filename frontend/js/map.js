@@ -37,7 +37,6 @@ function activateMapClick() {
                 if (address) {
                     var inputField = document.getElementById('location');
                     inputField.innerHTML = address;
-                    console.log(address);
                 }
             });
         });
