@@ -37,7 +37,7 @@ function buildContent(memory) {
 
 
     if (memory['link'].includes("instagram")) {
-        imgEmbed= getInstagramImageEmbedCode(memory['link'])
+        imgEmbed= getInstagramEmbedCode(memory['link'])
         content.innerHTML = `
         <div class="icon">
             <i aria-hidden="true" class="fa-solid ${memory['icon']}" title="${memory['title']}"></i>
@@ -82,4 +82,28 @@ function getInstagramImageEmbedCode(instagramLink) {
         return 'Invalid Instagram image link. Please provide a direct image link.';
     }
 }
+
+function getInstagramEmbedCode(instagramLink) {
+    // Check if the provided link is an Instagram image or video link.
+    if (instagramLink.match(/instagram\.com\/p\/[^/]+\/?/)) {
+        // Extract the image or video URL.
+        const mediaURL = `${instagramLink.split('/').slice(0, -1).join('/')}/media/?size=l`;
+
+        // Create HTML code to embed the media (image or video).
+        const embedCode = `<img src="${mediaURL}" alt="Instagram Media">`;
+        
+        return embedCode;
+    } else if (instagramLink.match(/instagram\.com\/reel\/[^/]+\/?/)) {
+        // Extract the video URL from the Instagram Reel link.
+        const videoURL = `${instagramLink}/embed`;
+
+        // Create HTML code to embed the video.
+        const embedCode = `<iframe src="${videoURL}" frameborder="0" allowfullscreen></iframe>`;
+        
+        return embedCode;
+    } else {
+        return 'Invalid Instagram link. Please provide a direct image or video link.';
+    }
+}
+
 
