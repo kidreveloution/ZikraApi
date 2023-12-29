@@ -17,12 +17,34 @@
     transition: box-shadow 0.3s, transform 0.2s; /* Smooth transition */
 }
 
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-15px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+#dateDiv {
+    /* Other styles for #dateDiv */
+    animation: bounce 5s ease-out;
+}
+
+
+
+
 #dateDiv{
     display: flex;
     position: absolute;
     top: 60px; /* Adjust as needed to place it at the desired location on the map */
     left: 10px; /* Adjust as needed */
     z-index: 10; /* Ensures it appears above the map */
+    animation: bounce 1s ease-out;
+
 }
 #datepicker .pika-button.has-event {
     background-color: #ff0000 !important; /* Change to your preferred color */
