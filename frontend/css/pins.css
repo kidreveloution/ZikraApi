@@ -29,9 +29,9 @@ body {
  */
 .property {
   align-items: center;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 50%;
-  color: #263238;
+  color: #3a3a3a;
   display: flex;
   font-size: 14px;
   gap: 15px;
@@ -47,7 +47,7 @@ body {
 .property::after {
   border-left: 9px solid transparent;
   border-right: 9px solid transparent;
-  border-top: 9px solid #FFFFFF;
+  border-top: 9px solid #c55858;
   content: "";
   height: 0;
   left: 50%;
@@ -63,7 +63,7 @@ body {
   align-items: center;
   display: flex;
   justify-content: center;
-  color: #FFFFFF;
+  color: #d32121;
 }
 
 .property .icon svg {

@@ -16,8 +16,11 @@ redis_connection = redis.Redis(
   password='NOoPPSfJTB7RUOhXSyVelyhCa8qUVd5p')
 
 
+
+
 def getAllMemoriesTimed(timestamp):
     res = []
+    locations= {}
 
     try:
         timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
@@ -29,14 +32,23 @@ def getAllMemoriesTimed(timestamp):
         try:
             individual=redisLoad(key)
             individual['id'] = key
+            ind_location = individual['location']
 
             ind_timestamp = individual['timestamp']
             memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
             print(type(individual))
             if (memDate == timestamp):
+
                 res.append(individual)
+                if ind_location in locations:
+                    locations[ind_location].append(individual)
+                else:
+                    locations[ind_location] = [individual]
+                
+
         except:
             pass
+    print("THIS IS LOCATIONS \n",locations)
     return res
     
 def redisLoad(id):

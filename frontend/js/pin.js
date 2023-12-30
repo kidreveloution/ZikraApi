@@ -82,7 +82,10 @@ function hideMarkers() {
 
 function buildContent(memory) {
   const content = document.createElement("div");
-  console.log(memory);
+
+  content.style.borderColor = "#d32121"; // Set the border color
+  content.style.borderWidth = "2px"; // Set the border width
+  content.style.borderStyle = "solid"; // Set the border style
   content.classList.add("property");
   content.innerHTML = `
     <div class="icon">
@@ -90,25 +93,16 @@ function buildContent(memory) {
     </div>
       <div class="details">
           <div class="price">${memory.title}</div>
-          <div class="address">${memory.address}</div>
+          <div class="address">${memory.id}</div>
           <div class="features">
           <div>
-              <i aria-hidden="true" class="fa fa-bed fa-lg bed" title="bedroom"></i>
+            <a href="${memory.link}" target="_blank">
+              <i aria-hidden="true" class="fa fa-link fa-lg link" title="bedroom"></i>
               <span class="fa-sr-only">bedroom</span>
-              <span>${memory.bed}</span>
+              <span>View Memory</span>
+              </a>
           </div>
-          <div>
-              <i aria-hidden="true" class="fa fa-bath fa-lg bath" title="bathroom"></i>
-              <span class="fa-sr-only">bathroom</span>
-              <span>${memory.bath}</span>
-          </div>
-          <div>
-              <i aria-hidden="true" class="fa fa-ruler fa-lg size" title="size"></i>
-              <span class="fa-sr-only">size</span>
-              <span>${memory.size} ft<sup>2</sup></span>
-          </div>
-          </div>
-      </div>
+        </div>
       `;
   return content;
 }
