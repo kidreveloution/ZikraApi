@@ -13,7 +13,7 @@ function initializeOrUpdatePikaday(events) {
         onSelect: function(date) {
             showDate = date.toISOString();
             hideMarkers()
-            getMemoriesCalandar(showDate,map.getBounds())
+            //getMemoriesCalandar(showDate,map.getBounds())
             showAllMemories(showDate)
 
         },
@@ -38,5 +38,7 @@ picker = new Pikaday({
 
 // Update Pikaday with new events
 updatePikadayWithNewEvents();
+
+
 picker.setDate(new Date('6-Oct-2023'));
 showAllMemories(new Date('6-Oct-2023'));

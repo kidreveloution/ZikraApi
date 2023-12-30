@@ -79,10 +79,11 @@ async function _populateMemories(res){
         else{
             const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
                 map,
-                content: buildContent(res[memory]),
-                position: { lat: res[memory]["lat"], lng: res[memory]["lon"] },
+                content: buildContent(res[memory][0]),
+                position: { lat: res[memory][0]["lat"], lng: res[memory][0]["lon"] },
                 title: res[memory]["title"],
                 //TODO: Need to eventually add animation
+                
             });
             markersArray.push(AdvancedMarkerElement)
 
