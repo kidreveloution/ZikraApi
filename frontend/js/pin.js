@@ -31,64 +31,25 @@ function buildContent(memory) {
   
     content.classList.add("memory");
     //memory = memory[0]
-
-    
-
-
-    if (memory['link'].includes("instagram")) {
-        imgEmbed= getInstagramEmbedCode(memory['link'])
-        console.log(memory)
         content.innerHTML = `
         <div class="icon">
             <i aria-hidden="true" class="fa-solid ${memory['icon']}" title="${memory['title']}"></i>
         </div>
-        <div class="details">
+        <div class="details" style="position: relative;">
             <div class="link">
                 <a href="${memory['link']}" target="_blank"> 
                     <div class="title">${memory['title']}</div>
                 </a>
             </div>
-            <div class="id">
+            <div class="id" style="font-size: smaller;">
                 ${memory['id']}
             </div>
+            <div class="close" style="position: flex; top: 0; right: 0; cursor: pointer;">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+        </div>    
         `;
-    
-    }else{
-
-    content.innerHTML = `
-      <div class="icon">
-          <i aria-hidden="true" class="fa-solid ${memory['icon']}" title="${memory['title']}"></i>
-      </div>
-      <div class="details">
-          <div class="title">${memory['title']}</div>
-          <div class="link">${memory['link']}</div>
-          </div>
-      </div>
-      `;
-    }
     return content;
-}
-function getInstagramEmbedCode(instagramLink) {
-    // Check if the provided link is an Instagram image link.
-    if (instagramLink.match(/instagram\.com\/p\/[^/]+\/(\?.*)?/)) {
-        // Extract the image URL.
-        const mediaURL = `${instagramLink.split('/').slice(0, -1).join('/')}/media/?size=l`;
-
-        // Create HTML code to embed the image.
-        const embedCode = `<img src="${mediaURL}" alt="Instagram Media">`;
-        
-        return embedCode;
-    } else if (instagramLink.match(/instagram\.com\/reel\/[^/]+\/?/)) {
-        // Extract the thumbnail URL for the Instagram Reel.
-        const thumbnailURL = `${instagramLink.split('/').slice(0, -1).join('/')}/media/?size=l`;
-
-        // Create HTML code to display the thumbnail image.
-        const embedCode = `<img src="${thumbnailURL}" alt="Instagram Reel Thumbnail">`;
-        
-        return embedCode;
-    } else {
-        return 'Invalid Instagram link. Please provide a direct image or video link.';
-    }
 }
 
 
