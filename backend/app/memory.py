@@ -33,7 +33,6 @@ def getAllMemoriesTimed(timestamp):
             individual=redisLoad(key)
             individual['id'] = key
             ind_location = individual['location']
-
             ind_timestamp = individual['timestamp']
             memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
             if (memDate == timestamp):

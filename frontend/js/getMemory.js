@@ -66,7 +66,7 @@ function getMemoriesForCalendar() {
 
 async function _populateMemories(res){
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
-
+    console.log(res)
     for (memory in res){
         console.log(res[memory]);
         if (res[memory].length > 1){
@@ -118,8 +118,7 @@ function createSharedMemoryMarker(sharedObject){
         toggleHighlight(AdvancedMarkerElement);
         });
 
-    }
-
+}
 
 function _formatSharedMemories(sharedMemory){
     titles=[]
