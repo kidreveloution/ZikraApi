@@ -106,3 +106,48 @@ function buildContent(memory) {
       `;
   return content;
 }
+
+function buildSharedContent(memories){
+  const content = document.createElement("div");
+
+  content.style.borderColor = "#d32121"; // Set the border color
+  content.style.borderWidth = "2px"; // Set the border width
+  content.style.borderStyle = "solid"; // Set the border style
+  content.classList.add("property");
+  linkContent = buildLinks(memories["links"])
+  content.innerHTML = `
+    <div class="icon">
+        <i aria-hidden="true" class="fa-solid ${memories["icon"]}" title="${memories["title"]}"></i>
+    </div>
+      <div class="details">
+          <div class="price">${memories.title}</div>
+          <div class="address">${memories.ids}</div>
+          <div class="features">
+            ${linkContent}
+        </div>
+      `;
+  return content;
+
+}
+
+function buildLinks(links){
+    // Assuming memories.links is an array of URLs
+
+  // Initialize an empty string to hold the HTML
+  let htmlContent = '';
+
+  // Iterate over each link and append the HTML string for each link
+  links.forEach(link => {
+      htmlContent += `
+      <div style="display: inline-block; padding: 10px; margin-right: 10px;">
+              <a href="${link}" target="_blank">
+                  <i aria-hidden="true" class="fa fa-link fa-lg link" title="bedroom"></i>
+                  <span class="fa-sr-only">bedroom</span>
+                  <span>View Memory</span>
+              </a>
+          </div>
+      `;
+  });
+
+  return htmlContent;
+}
