@@ -87,8 +87,8 @@ async function _populateMemories(res){
             markersArray.push(AdvancedMarkerElement)
 
             AdvancedMarkerElement.addListener("click", () => {
-            toggleHighlight(AdvancedMarkerElement);
-        });
+                toggleHighlight(AdvancedMarkerElement);
+            });
     }
   }    
 }

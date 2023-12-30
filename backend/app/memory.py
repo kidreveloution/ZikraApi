@@ -3,7 +3,7 @@ import json
 import uuid
 from datetime import datetime
 import math
-
+import re
 # redis_connection = redis.Redis(
 #   host=str(os.environ['REDIS_HOST']),
 #   port=str(os.environ['REDIS_PORT']),
@@ -22,11 +22,15 @@ def getAllMemoriesTimed(timestamp):
     res = []
     locations= {}
 
+
     try:
+        # First attempt: Parse assuming the format is 'YYYY-MM-DD'
         timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
     except ValueError:
-        timestamp = datetime.strptime(timestamp, '%a %b %d %Y %H:%M:%S GM')
-
+        # Second attempt: Adjust the format to match the timestamp
+        # Remove the timezone abbreviation and any additional text
+        timestamp = re.sub(r'\sGMT[-+]\d{4}\s\(.*\)$', '', timestamp)
+        timestamp = datetime.strptime(timestamp, '%a %b %d %Y %H:%M:%S')
     for key in redis_connection.scan_iter("*"):
 
         try:
@@ -43,6 +47,7 @@ def getAllMemoriesTimed(timestamp):
                     locations[ind_location] = [individual]
         except:
             pass
+    print(locations)
     return locations
     
 def redisLoad(id):
