@@ -68,13 +68,13 @@ async function _populateMemories(res){
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
 
     for (memory in res){
+        console.log(memory);
         if (res[memory].length > 1){
+
           //add Support for shared memory here
-          continue
+            console.log("Shared Memory")
+            continue
       }   
-      const pinBackground = new PinElement({
-        background: "#F0000FF",
-      });
         const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
           map,
           content: buildContent(res[memory]),
