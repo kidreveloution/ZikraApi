@@ -36,20 +36,15 @@ def getAllMemoriesTimed(timestamp):
 
             ind_timestamp = individual['timestamp']
             memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
-            print(type(individual))
             if (memDate == timestamp):
-
                 res.append(individual)
                 if ind_location in locations:
                     locations[ind_location].append(individual)
                 else:
                     locations[ind_location] = [individual]
-                
-
         except:
             pass
-    print("THIS IS LOCATIONS \n",locations)
-    return res
+    return locations
     
 def redisLoad(id):
     memory_data = redis_connection.get(id)  
