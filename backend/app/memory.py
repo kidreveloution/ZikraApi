@@ -25,12 +25,16 @@ def getAllMemoriesTimed(timestamp):
         timestamp = datetime.strptime(timestamp, '%a %b %d %Y %H:%M:%S GM')
 
     for key in redis_connection.scan_iter("*"):
+
         try:
             individual=redisLoad(key)
+            individual['id'] = key
+
             ind_timestamp = individual['timestamp']
             memDate = datetime.strptime(ind_timestamp,"%Y-%m-%d")
+            print(type(individual))
             if (memDate == timestamp):
-                res.append(key,individual)
+                res.append(individual)
         except:
             pass
     return res

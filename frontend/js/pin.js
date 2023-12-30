@@ -37,17 +37,20 @@ function buildContent(memory) {
 
     if (memory['link'].includes("instagram")) {
         imgEmbed= getInstagramEmbedCode(memory['link'])
+        console.log(memory)
         content.innerHTML = `
         <div class="icon">
             <i aria-hidden="true" class="fa-solid ${memory['icon']}" title="${memory['title']}"></i>
         </div>
         <div class="details">
             <div class="link">
-            <a href="${memory['link']}" target="_blank"> <!-- Use target="_blank" to open link in a new tab -->
-                <div class="image">${imgEmbed}</div>
-            </a>
-        </div>
-        </div>
+                <a href="${memory['link']}" target="_blank"> 
+                    <div class="title">${memory['title']}</div>
+                </a>
+            </div>
+            <div class="id">
+                ${memory['id']}
+            </div>
         `;
     
     }else{
@@ -65,38 +68,22 @@ function buildContent(memory) {
     }
     return content;
 }
-
-function getInstagramImageEmbedCode(instagramLink) {
-    // Check if the provided link is an Instagram image link (direct image link).
-    if (instagramLink.match(/instagram\.com\/p\/[^/]+\/?/)) {
-        // Extract the image URL.
-        const imageURL = instagramLink.split('/').slice(0, -1).join('/') + '/media/?size=l';
-        
-        // Create HTML code to embed the image.
-        const embedCode = `<img src="${imageURL}" alt="Instagram Image">`;
-        
-        return embedCode;
-    } else {
-        return 'Invalid Instagram image link. Please provide a direct image link.';
-    }
-}
-
 function getInstagramEmbedCode(instagramLink) {
-    // Check if the provided link is an Instagram image or video link.
+    // Check if the provided link is an Instagram image link.
     if (instagramLink.match(/instagram\.com\/p\/[^/]+\/(\?.*)?/)) {
-        // Extract the image or video URL.
+        // Extract the image URL.
         const mediaURL = `${instagramLink.split('/').slice(0, -1).join('/')}/media/?size=l`;
 
-        // Create HTML code to embed the media (image or video).
+        // Create HTML code to embed the image.
         const embedCode = `<img src="${mediaURL}" alt="Instagram Media">`;
         
         return embedCode;
     } else if (instagramLink.match(/instagram\.com\/reel\/[^/]+\/?/)) {
-        // Extract the video URL from the Instagram Reel link.
-        const videoURL = `${instagramLink}/embed`;
+        // Extract the thumbnail URL for the Instagram Reel.
+        const thumbnailURL = `${instagramLink.split('/').slice(0, -1).join('/')}/media/?size=l`;
 
-        // Create HTML code to embed the video.
-        const embedCode = `<iframe src="${videoURL}" frameborder="0" allowfullscreen></iframe>`;
+        // Create HTML code to display the thumbnail image.
+        const embedCode = `<img src="${thumbnailURL}" alt="Instagram Reel Thumbnail">`;
         
         return embedCode;
     } else {
