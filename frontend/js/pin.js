@@ -119,12 +119,12 @@ function buildSharedContent(memories){
     <div class="icon">
         <i aria-hidden="true" class="fa-solid ${memories["icon"]}" title="${memories["title"]}"></i>
     </div>
-      <div class="details">
+      <div class="details" >
           <div class="price">${memories.title}</div>
-          <div class="address">${memories.ids}</div>
+          <div class="address">${memories.titles}</div>
           <div class="features">
             ${linkContent}
-        </div>
+          </div>
       `;
   return content;
 
