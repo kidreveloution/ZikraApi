@@ -12,6 +12,7 @@ function initializeOrUpdatePikaday(events) {
         field: document.getElementById('datepicker'),
         onSelect: function(date) {
             showDate = date.toISOString();
+            console.log("Selected Date: ", date.toISOString());
             hideMarkers()
             //getMemoriesCalandar(showDate,map.getBounds())
             showAllMemories(showDate)
@@ -41,4 +42,4 @@ updatePikadayWithNewEvents();
 
 
 picker.setDate(new Date('6-Oct-2023'));
-showAllMemories(new Date('6-Oct-2023'));
+showAllMemories('2023-10-06T05:00:00.000Z');
