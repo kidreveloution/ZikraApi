@@ -10,19 +10,20 @@ import re
 #   password=str(os.environ['REDIS_PASSWORD'])
 #   )
 
-redis_connection = redis.Redis(
-  host='redis-18146.c28845.us-east-2-mz.ec2.cloud.rlrcp.com',
-  port=18146,
-  password='NOoPPSfJTB7RUOhXSyVelyhCa8qUVd5p')
+# redis_connection = redis.Redis(
+#   host='redis-18146.c28845.us-east-2-mz.ec2.cloud.rlrcp.com',
+#   port=18146,
+#   password='NOoPPSfJTB7RUOhXSyVelyhCa8qUVd5p')
 
+#Connecting to local Redis server
+
+redis_connection = redis.Redis(host='localhost', port=6379, decode_responses=True)
 
 
 
 def getAllMemoriesTimed(timestamp):
     res = []
     locations= {}
-
-
     try:
         # First attempt: Parse assuming the format is 'YYYY-MM-DD'
         timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
@@ -162,7 +163,15 @@ class GeoRectangle:
         return diagonal / 2 * 111  # Conversion to kilometers
 
 class Memory:
-    def __init__(self, title: str, location: str, timestamp, lat: float, lon: float, icon: str,id=None):
+    def __init__(self, 
+                title: str, 
+                location: str, 
+                timestamp, 
+                lat: float, 
+                lon: float, 
+                icon: str,
+                id=None, 
+                descx: str = None):
         self.id = str(uuid.uuid4()) if id is None else id
         self.title = title
         self.location = location
@@ -170,6 +179,7 @@ class Memory:
         self.lat = self._convert_to_float(lat)
         self.lon = self._convert_to_float(lon)
         self.icon = icon
+        self.descx = descx
         
     @staticmethod
     def _convert_to_float(value):
@@ -179,8 +189,24 @@ class Memory:
             raise ValueError(f"Invalid value for a coordinate: {value}")
 
 class Video(Memory):
-    def __init__(self, title, location, timestamp, lat, lon, link, icon):
-        super().__init__(title=title, location=location, timestamp=timestamp, lat=lat, lon=lon, icon=icon)
+    def __init__(
+            self, 
+            title, 
+            location, 
+            timestamp, 
+            lat, 
+            lon, 
+            link, 
+            icon,
+            descx):
+        super().__init__(
+            title=title, 
+            location=location, 
+            timestamp=timestamp, 
+            lat=lat, 
+            lon=lon, 
+            icon=icon,
+            descx=descx)
         self.link = link
 
 class Audio(Memory):

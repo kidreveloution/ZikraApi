@@ -28,6 +28,7 @@ class addEntry(BaseModel):
     lon: float
     link: str
     icon: str
+    descx: str
 
 @app.get("/")
 async def root():
@@ -44,7 +45,8 @@ def read_item(
         lat=item.lat,
         lon=item.lon,
         link=item.link,
-        icon=item.icon
+        icon=item.icon,
+        descx=item.descx,
         )
     print(videoMemory)
     redisSave(videoMemory)
