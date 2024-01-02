@@ -93,7 +93,7 @@ function buildContent(memory) {
     </div>
       <div class="details">
           <div class="price">${memory.title}</div>
-          <div class="address">${memory.id}</div>
+          <div class="address">${memory.descx}</div>
           <div class="features">
           <div>
             <a href="${memory.link}" target="_blank">

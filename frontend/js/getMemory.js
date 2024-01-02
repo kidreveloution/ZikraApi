@@ -71,7 +71,6 @@ async function _populateMemories(res){
         console.log(res[memory]);
         if (res[memory].length > 1){
             console.log("Shared Memory")
-
             sharedObject = _formatSharedMemories(res[memory])
             createSharedMemoryMarker(sharedObject)
           //add Support for shared memory here
@@ -90,8 +89,8 @@ async function _populateMemories(res){
             AdvancedMarkerElement.addListener("click", () => {
                 toggleHighlight(AdvancedMarkerElement);
             });
-    }
-  }    
+        }
+    }    
 }
 
 // icon: "fa fa-hospital-o"
