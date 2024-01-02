@@ -7,6 +7,7 @@ from fastapi import FastAPI, Query
 import os
 from mangum import Mangum
 
+
 app = FastAPI()
 handler = Mangum(app)
 
@@ -31,13 +32,14 @@ class addEntry(BaseModel):
     descx: str
 
 @app.get("/")
-async def root():
+def root():
     return {"message": "Welcome to Zikra"}
 
 @app.post("/addmemory/")
 def read_item(
         item: addEntry
     ):
+    print(item)
     videoMemory = Video(
         title=item.title,
         location=item.location,

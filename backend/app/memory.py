@@ -67,13 +67,17 @@ def redisSave(memory):
     'lon': memory.lon,
     'link': memory.link,
     'icon': memory.icon,
+    'descx': memory.descx,
     'type': memory.__class__.__name__,
     })
     redis_connection.set(
                         memory.id,
                         memory_data, 
-                        )
-    redis_connection.geoadd(name='memories',values=[memory.lon, memory.lat, memory.id])
+    )
+    redis_connection.geoadd(
+                            name='memories',
+                            values=[memory.lon, memory.lat, memory.id]
+    )
     pass
 #Timestamp = YYYY-MM-DD
 
