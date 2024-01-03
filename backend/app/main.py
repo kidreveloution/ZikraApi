@@ -8,7 +8,7 @@ import os
 from mangum import Mangum
 
 
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None)
 handler = Mangum(app)
 
 # CORS configuration

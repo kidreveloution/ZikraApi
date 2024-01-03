@@ -66,7 +66,8 @@ function buildSharedContent(memories){
           <div class="price">${memories.title}</div>
           <div class="address">${memories.titles}</div>
           <div class="features">${linkContent}</div>
-      </div>     
+      </div>
+    </div>     
       `;
   return content;
 
