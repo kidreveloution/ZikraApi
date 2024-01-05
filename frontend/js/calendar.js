@@ -41,5 +41,5 @@ picker = new Pikaday({
 updatePikadayWithNewEvents();
 
 
-picker.setDate(new Date('6-Oct-2023'));
-showAllMemories('2023-10-06T05:00:00.000Z');
+picker.setDate(new Date('7-Oct-2023'));
+showAllMemories('2023-10-07T05:00:00.000Z');
