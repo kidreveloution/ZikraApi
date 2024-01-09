@@ -4,18 +4,6 @@ import uuid
 from datetime import datetime
 import math
 import re
-# redis_connection = redis.Redis(
-#   host=str(os.environ['REDIS_HOST']),
-#   port=str(os.environ['REDIS_PORT']),
-#   password=str(os.environ['REDIS_PASSWORD'])
-#   )
-
-# redis_connection = redis.Redis(
-#   host='redis-18146.c28845.us-east-2-mz.ec2.cloud.rlrcp.com',
-#   port=18146,
-#   password='NOoPPSfJTB7RUOhXSyVelyhCa8qUVd5p')
-
-#Connecting to local Redis server
 
 redis_connection = redis.Redis(host='localhost', port=6379, decode_responses=True)
 
