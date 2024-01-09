@@ -93,7 +93,10 @@ async def upload(
     return {"message": f"Successfully uploaded {file.filename}"}
     
 @app.get("/getMemoryById/{itemId}")
-def get_item(itemId: str) -> Any:
+def get_item(
+    itemId: str,
+    api_key: str = Depends(get_api_key)
+) -> Any:
     try:
         memory = redisLoad(itemId)
         return memory
