@@ -131,3 +131,11 @@ def get_item(
 ):
     # Call All Memories given timestamp
     return getAllMemoriesTimed(timestamp)
+
+@app.post("/deleteMemory/")
+def read_item(
+        memoryId: str,
+        api_key: str = Depends(get_api_key)
+    ):
+
+    return ("MEMORY CANCLLED")
