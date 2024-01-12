@@ -138,4 +138,4 @@ def read_item(
         api_key: str = Depends(get_api_key)
     ):
 
-    return ("MEMORY CANCLLED")
+    return ("MEMORY CANCLLED",memoryId)
