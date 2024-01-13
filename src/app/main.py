@@ -13,8 +13,8 @@ API_KEY_NAME = "zikra_main"
 api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
 
 
-app = FastAPI(docs_url=None, redoc_url=None)
-
+# app = FastAPI(docs_url=None, redoc_url=None)
+app = FastAPI()
 # CORS configuration
 origins = ["*"]
 app.add_middleware(
@@ -48,7 +48,7 @@ async def get_api_key(api_key_header: str = Depends(api_key_header)):
 def root():
     return {"message": "Welcome to Zikra"}
 
-@app.post("/addmemory/")
+@app.post("/addMemory/")
 def read_item(
         item: addEntry,
         api_key: str = Depends(get_api_key)
@@ -92,7 +92,7 @@ async def upload(
 
     return {"message": f"Successfully uploaded {file.filename}"}
     
-@app.get("/getMemoryById/{itemId}")
+@app.get("/getMemoryById/")
 def get_item(
     itemId: str,
     api_key: str = Depends(get_api_key)
@@ -137,5 +137,10 @@ def read_item(
         memoryId: str,
         api_key: str = Depends(get_api_key)
     ):
+    try:
+        memory = redisLoad(memoryId)
+    except:
+        return ("MEMORY DOES NOT EXIST",memoryId)
+    redisDelete(memoryId)
 
-    return ("MEMORY CANCLLED",memoryId)
+    return ("MEMORY DELETED",memoryId)
