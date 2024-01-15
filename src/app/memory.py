@@ -46,9 +46,15 @@ def redisLoad(id):
         return (memory_dict)
     raise AttributeError(f'{id} not found in Database')
 
-def redisDelete(id):
+def redisDelete(id, redis_connection):
+    # Delete the key itself (if it exists as a separate key)
     redis_connection.delete(id)
-    return (f'{id} successfully deleted')
+
+    # Remove the id from the sorted set 'memories'
+    redis_connection.zrem('memories', id)
+
+    return f'{id} successfully deleted'
+
 
 def redisSave(memory):
     memory_data = json.dumps({
