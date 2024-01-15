@@ -46,7 +46,7 @@ def redisLoad(id):
         return (memory_dict)
     raise AttributeError(f'{id} not found in Database')
 
-def redisDelete(id, redis_connection):
+def redisDelete(id):
     # Delete the key itself (if it exists as a separate key)
     redis_connection.delete(id)
 
