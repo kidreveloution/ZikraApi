@@ -8,7 +8,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
 
-uri = "mongodb+srv://ashahindev:7Zfngh0wvYzdUQqp@zikracluster.viuumuy.mongodb.net/?retryWrites=true&w=majority"
+uri = "mongodb+srv://localBuild:azZWk6zEmqiQ4068@zikracluster.viuumuy.mongodb.net/?retryWrites=true&w=majority"
 
 # Create a client instance
 # client = MongoClient('localhost', 27017)
