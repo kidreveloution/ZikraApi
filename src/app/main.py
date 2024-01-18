@@ -120,7 +120,7 @@ def get_item(ne_lat: float = Query(None),
 ):
     # Call your getMemories function with the retrieved parameters
     #return(timestamp)
-    return mongoGetMemoriesInFrame(ne_lat=ne_lat,ne_long=ne_long,sw_lat=sw_lat,sw_long=sw_long,timestamp=timestamp)
+    return mongoGetMemoriesInFrame(ne_lat=ne_lat,ne_long=ne_long,sw_lat=sw_lat,sw_long=sw_long)
     #return getMemories(GeoRectangle(ne_lat, ne_long, sw_lat, sw_long, center_lat, center_long), timestamp)
 
 @app.get("/getAllMemories/")
