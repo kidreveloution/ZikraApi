@@ -199,7 +199,7 @@ def mongoGetMemoriesInFrame(ne_lat, ne_long, sw_lat, sw_long):
                 pass
             else:
                 results.append(formattedDate)
-        print(results)
+        return (results)
     except Exception as e:
         return(f"An error occurred in mongoGetMemoriesInFrame: {e}")
 
