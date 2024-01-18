@@ -2,6 +2,7 @@ from typing import Any
 from fastapi import FastAPI, File, UploadFile, Form, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from memory import *
+from mongo_memory import *
 from pydantic import BaseModel
 from fastapi import FastAPI, Query
 import os
@@ -65,7 +66,8 @@ def read_item(
         descx=item.descx,
         )
     print(videoMemory)
-    redisSave(videoMemory)
+    mongoSave(videoMemory)
+    #redisSave(videoMemory)
     return {"message": f"Successfully Added {videoMemory.title}"}
 
 @app.post("/uploadMemory/")
@@ -88,7 +90,9 @@ async def upload(
     finally:
         file.file.close()
     videoMemory.link = file_path
-    redisSave(videoMemory)
+    
+    mongoSave(videoMemory)
+    #redisSave(videoMemory)
 
     return {"message": f"Successfully uploaded {file.filename}"}
     
@@ -98,18 +102,12 @@ def get_item(
     api_key: str = Depends(get_api_key)
 ) -> Any:
     try:
-        memory = redisLoad(itemId)
+        memory = mongoLoad(itemId)
+        #memory = redisLoad(itemId)
         return memory
     except:
         return {"message": f"'{itemId}' does not exist"}
 
-# "ne_lat": bounds.getNortheast().lat(),
-# "ne_long": bounds.getNortheast().lng(),
-# "sw_lat": bounds.getSouthwest().lat(),
-# "sw_long": bounds.getSouthwest().lng(),
-# "center_lat":bounds.getCenter().lat(),
-# "center_long":bounds.getCenter().lng(),
-# "timestamp": timestamp,
 @app.get("/getMemories/")
 def get_item(ne_lat: float = Query(None),
              ne_long: float = Query(None),
@@ -122,7 +120,8 @@ def get_item(ne_lat: float = Query(None),
 ):
     # Call your getMemories function with the retrieved parameters
     #return(timestamp)
-    return getMemories(GeoRectangle(ne_lat, ne_long, sw_lat, sw_long, center_lat, center_long), timestamp)
+    return mongoGetMemoriesInFrame(ne_lat=ne_lat,ne_long=ne_long,sw_lat=sw_lat,sw_long=sw_long,timestamp=timestamp)
+    #return getMemories(GeoRectangle(ne_lat, ne_long, sw_lat, sw_long, center_lat, center_long), timestamp)
 
 @app.get("/getAllMemories/")
 def get_item(
@@ -130,7 +129,8 @@ def get_item(
     api_key: str = Depends(get_api_key)
 ):
     # Call All Memories given timestamp
-    return getAllMemoriesTimed(timestamp)
+    return mongoGetAllMemories(timestamp)
+    #return getAllMemoriesTimed(timestamp)
 
 @app.post("/deleteMemory/")
 def read_item(
@@ -138,9 +138,12 @@ def read_item(
         api_key: str = Depends(get_api_key)
     ):
     try:
-        memory = redisLoad(memoryId)
+        memory = mongoLoad(memory_id=memoryId)
+        #memory = redisLoad(memoryId)
     except:
         return ("MEMORY DOES NOT EXIST",memoryId)
-    redisDelete(memoryId)
+    
+    mongoDelete(memory_id=memoryId)
+    #redisDelete(memoryId)
 
     return ("MEMORY DELETED",memoryId)
