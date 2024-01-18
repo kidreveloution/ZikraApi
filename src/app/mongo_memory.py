@@ -1,16 +1,18 @@
 from pymongo import MongoClient
-import redis
-import json
 import uuid
 from datetime import datetime
-import math
 import re
 from bson.objectid import ObjectId
 
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
+
+uri = "mongodb+srv://ashahindev:7Zfngh0wvYzdUQqp@zikracluster.viuumuy.mongodb.net/?retryWrites=true&w=majority"
 
 # Create a client instance
-client = MongoClient('localhost', 27017)
+# client = MongoClient('localhost', 27017)
+client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Specify the database name
 zikra_db = client['zikra_db']  # Replace with your database name
@@ -82,33 +84,31 @@ class Text(Memory):
         self.content = content
 
 def mongoSave(memory):
-    memory_data = {
-        'title': memory.title,
-        'location': memory.location,
-        'timestamp': memory.timestamp,
-        'lat': memory.lat,
-        'lon': memory.lon,
-        'link': memory.link,
-        'icon': memory.icon,
-        'descx': memory.descx,
-        'type': memory.__class__.__name__,
-    }
+    try: 
+        memory_data = {
+            'title': memory.title,
+            'location': memory.location,
+            'timestamp': memory.timestamp,
+            'lat': memory.lat,
+            'lon': memory.lon,
+            'link': memory.link,
+            'icon': memory.icon,
+            'descx': memory.descx,
+            'type': memory.__class__.__name__,
+        }
 
-    geo_point = {
-        "type": "Point",
-        "coordinates": [memory.lon, memory.lat],
-        "timestamp": memory.timestamp,
-    }
+        geo_point = {
+            "type": "Point",
+            "coordinates": [memory.lon, memory.lat],
+            "timestamp": memory.timestamp,
+        }
 
-    memories_collection.insert_one(memory_data)
+        memories_collection.insert_one(memory_data)
 
-    # Pikaday functions need to know if it is within the window AND if it is within the time
-    memory_geo_collection.insert_one(geo_point)
-
-
-
-
-    pass
+        # Pikaday functions need to know if it is within the window AND if it is within the time
+        memory_geo_collection.insert_one(geo_point)
+    except Exception as e:
+        return(f"An error occurred in mongoSave: {e}")
 
 def mongoLoad(memory_id):
     try:
@@ -121,7 +121,7 @@ def mongoLoad(memory_id):
         return document
 
     except Exception as e:
-        print(f"An error occurred: {e}")
+        return(f"An error occurred in mongoLoad: {e}")
 
 def mongoDelete(memory_id):
     try:
@@ -138,16 +138,7 @@ def mongoDelete(memory_id):
             print(f"No document found with ID {memory_id}.")
 
     except Exception as e:
-        print(f"An error occurred: {e}")
-
-# ne_lat: float = Query(None),
-# ne_long: float = Query(None),
-# sw_lat: float = Query(None),
-# sw_long: float = Query(None),
-# center_lat: float = Query(None),
-# center_long: float = Query(None),
-# timestamp: str = None,
-# api_key: str = Depends(get_api_key)
+        return(f"An error occurred in mongoDelete: {e}")
 
 def _getFormattedDate(datetime_object):
     formatted_str = ""
@@ -210,15 +201,38 @@ def mongoGetMemoriesInFrame(ne_lat, ne_long, sw_lat, sw_long):
                 results.append(formattedDate)
         print(results)
     except Exception as e:
-        print(f"An error occurred: {e}")
+        return(f"An error occurred in mongoGetMemoriesInFrame: {e}")
+
+def mongoGetAllMemories(timestamp):
+    results= {}
+    try:
+        # First attempt: Parse assuming the format is 'YYYY-MM-DD'
+        timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
+    except ValueError:
+        # Second attempt: Adjust the format to match the timestamp
+        # Remove the timezone abbreviation and any additional text
+        timestamp = re.sub(r'\sGMT[-+]\d{4}\s\(.*\)$', '', timestamp)
+        timestamp = datetime.strptime(timestamp, '%a %b %d %Y %H:%M:%S')
+    try: 
+        memories = memories_collection.find({'timestamp': timestamp})
+        for memory in memories:
+            ind_location = memory['location']
+            # For shared memories, if two memories have the same location, group them
+            if ind_location in results:
+                results[ind_location].append(memory) 
+            else:
+                results[ind_location] = [memory]
+    except Exception as e:
+        return(f"An error occurred in mongoGetMemoriesInFrame: {e}")
+    return results
 
 
 
 # Testing 
 def generate_fake_video_data():
-    title = "Mine Video"
+    title = "Test 3"
     location = "REAS Location"
-    timestamp = str(datetime.now())
+    timestamp = "2024-01-12"
     lat = 12.3456  # Example latitude
     lon = 98.7654  # Example longitude
     link = "http://example.com/video.mp4"
@@ -236,3 +250,12 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ne_lat: float = Query(None),
+# ne_long: float = Query(None),
+# sw_lat: float = Query(None),
+# sw_long: float = Query(None),
+# center_lat: float = Query(None),
+# center_long: float = Query(None),
+# timestamp: str = None,
+# api_key: str = Depends(get_api_key)
