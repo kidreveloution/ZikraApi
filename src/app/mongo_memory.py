@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import uuid
 from datetime import datetime
 import re
+import json
 from bson.objectid import ObjectId
 from bson.errors import InvalidId
 
@@ -226,7 +227,9 @@ def mongoGetAllMemories(timestamp):
                 results[ind_location] = [memory]
     except Exception as e:
         return(f"An error occurred in mongoGetMemoriesInFrame: {e}")
-    return results
+    results_json = json.dumps(results, default=str)  # 'default=str' helps in converting non-serializable objects
+
+    return results_json
 
 
 
