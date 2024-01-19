@@ -206,19 +206,14 @@ def mongoGetMemoriesInFrame(ne_lat, ne_long, sw_lat, sw_long):
 def mongoGetAllMemories(timestamp):
     results= {}
     try:
-        # First attempt: Parse assuming the format is 'YYYY-MM-DDT00:00:00'
-        try:
-            timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
-        except:
-            timestamp = datetime.strptime(timestamp, '%Y-%b-%d')
+        date_object = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
+    except:
+        date_object = datetime.strptime(timestamp, '%Y-%b-%d')
+    print(timestamp)
 
-    except ValueError:
-        # Second attempt: Adjust the format to match the timestamp
-        # Remove the timezone abbreviation and any additional text
-        timestamp = re.sub(r'\sGMT[-+]\d{4}\s\(.*\)$', '', timestamp)
-        timestamp = datetime.strptime(timestamp, '%a %b %d %Y %H:%M:%S')
+    formatted_date = date_object.strftime("%Y-%m-%d")
     try: 
-        memories = memories_collection.find({'timestamp': timestamp})
+        memories = memories_collection.find({'timestamp': formatted_date})
         for memory in memories:
             ind_location = memory['location']
             # For shared memories, if two memories have the same location, group them

@@ -2,7 +2,11 @@ from pymongo import MongoClient
 from mongo_memory import *
 def list_collections_and_documents(db_name):
     # Connect to MongoDB - Replace 'localhost' and '27017' with your MongoDB host and port if different
-    client = MongoClient('localhost', 27017)
+    uri = "mongodb+srv://localBuild:azZWk6zEmqiQ4068@zikracluster.viuumuy.mongodb.net/?retryWrites=true&w=majority"
+
+    # Create a client instance
+    # client = MongoClient('localhost', 27017)
+    client = MongoClient(uri, server_api=ServerApi('1'))
 
     # Access the specified database
     db = client[db_name]
@@ -41,6 +45,6 @@ if __name__ == "__main__":
     sw_long = point_longitude - 12.4 # Adjust as needed
 
     # Call the function to retrieve the document within the specified bounding box
-    print("\n\n GETTING MEMORIES")
+    #print("\n\n GETTING MEMORIES")
     #print(mongoGetMemoriesInFrame(ne_lat=12.3556,ne_long=98.7754, sw_lat=12.3356,sw_long=98.7554,timestamp=None))
     print(mongoGetAllMemories('2024-01-12'))
