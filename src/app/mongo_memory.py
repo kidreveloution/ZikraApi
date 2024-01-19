@@ -206,8 +206,12 @@ def mongoGetMemoriesInFrame(ne_lat, ne_long, sw_lat, sw_long):
 def mongoGetAllMemories(timestamp):
     results= {}
     try:
-        # First attempt: Parse assuming the format is 'YYYY-MM-DD'
-        timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
+        # First attempt: Parse assuming the format is 'YYYY-MM-DDT00:00:00'
+        try:
+            timestamp = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
+        except:
+            timestamp = datetime.strptime(timestamp, '%Y-%b-%d')
+
     except ValueError:
         # Second attempt: Adjust the format to match the timestamp
         # Remove the timezone abbreviation and any additional text
