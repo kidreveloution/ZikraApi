@@ -227,7 +227,7 @@ def mongoGetAllMemories(timestamp):
                 results[ind_location] = [memory]
     except Exception as e:
         return(f"An error occurred in mongoGetMemoriesInFrame: {e}")
-    results_json = json.dumps(results)  # 'default=str' helps in converting non-serializable objects
+    results_json = json.dumps(results, default=str)  # 'default=str' helps in converting non-serializable objects
 
     return results_json
 
