@@ -3,6 +3,7 @@ import uuid
 from datetime import datetime
 import re
 from bson.objectid import ObjectId
+from bson.errors import InvalidId
 
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -120,6 +121,8 @@ def mongoLoad(memory_id):
 
         return document
 
+    except InvalidId:
+        return ("Invalid ObjectId format."+memory_id)
     except Exception as e:
         return(f"An error occurred in mongoLoad: {e}")
 

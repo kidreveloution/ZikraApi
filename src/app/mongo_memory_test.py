@@ -46,5 +46,5 @@ if __name__ == "__main__":
 
     # Call the function to retrieve the document within the specified bounding box
     #print("\n\n GETTING MEMORIES")
-    #print(mongoGetMemoriesInFrame(ne_lat=12.3556,ne_long=98.7754, sw_lat=12.3356,sw_long=98.7554,timestamp=None))
-    print(mongoGetAllMemories('2024-01-12'))
+    print(mongoGetMemoriesInFrame(ne_lat=12.3556,ne_long=98.7754, sw_lat=12.3356,sw_long=98.7554))
+    #print(mongoGetAllMemories('2024-01-12'))
