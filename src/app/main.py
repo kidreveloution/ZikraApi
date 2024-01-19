@@ -1,7 +1,6 @@
 from typing import Any
 from fastapi import FastAPI, File, UploadFile, Form, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
-from memory import *
 from mongo_memory import *
 from pydantic import BaseModel
 from fastapi import FastAPI, Query
@@ -16,8 +15,9 @@ api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
 
 # app = FastAPI(docs_url=None, redoc_url=None)
 app = FastAPI()
+
 # CORS configuration
-origins = ["*"]
+origins = ["https://zikramap.com","https://main.dxbae4zfoq791.amplifyapp.com/"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
