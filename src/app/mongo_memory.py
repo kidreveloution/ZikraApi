@@ -134,7 +134,7 @@ def mongoDelete(memory_id):
 
         # Delete the document by its ID
         result = memories_collection.delete_one({'_id': memory_id})
-
+        memory_geo_collection.delete_one({'_id': memory_id})
         # Check if a document was deleted
         if result.deleted_count > 0:
             print(f"Document with ID {memory_id} was deleted.")
