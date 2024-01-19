@@ -128,6 +128,7 @@ def get_item(
     timestamp: str = None,
     api_key: str = Depends(get_api_key)
 ):
+    print("GETTING MONGO GET ALL MEMORIES",timestamp)
     # Call All Memories given timestamp
     return mongoGetAllMemories(timestamp)
     #return getAllMemoriesTimed(timestamp)
