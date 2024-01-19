@@ -17,7 +17,7 @@ api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
 app = FastAPI()
 
 # CORS configuration
-origins = ["https://zikramap.com","https://main.dxbae4zfoq791.amplifyapp.com/"]
+origins = ["https://zikramap.com"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
