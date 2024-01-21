@@ -99,13 +99,18 @@ def mongoSave(memory):
             'type': memory.__class__.__name__,
         }
 
+
+
+        insert_result = memories_collection.insert_one(memory_data)
+        memory_id = insert_result.inserted_id
+
         geo_point = {
+            "_id": memory_id,
             "type": "Point",
             "coordinates": [memory.lon, memory.lat],
             "timestamp": memory.timestamp,
         }
 
-        memories_collection.insert_one(memory_data)
 
         # Pikaday functions need to know if it is within the window AND if it is within the time
         memory_geo_collection.insert_one(geo_point)
