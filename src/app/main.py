@@ -38,13 +38,14 @@ class addEntry(BaseModel):
 
 async def get_api_key(api_key_header: str = Depends(api_key_header)):
     print("\n THIS IS API KEY ", api_key_header)
-    if api_key_header == API_KEY:
-        return api_key_header
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid API Key",
-        )
+    # if api_key_header == API_KEY:
+    #     return api_key_header
+    # else:
+    #     raise HTTPException(
+    #         status_code=status.HTTP_401_UNAUTHORIZED,
+    #         detail="Invalid API Key",
+    #     )
+    pass
 
 @app.get("/")
 def root():
