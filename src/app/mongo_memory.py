@@ -235,6 +235,9 @@ def mongoGetAllMemories(timestamp):
                     results[ind_location].append(memory) 
                 else:
                     results[ind_location] = [memory]
+            else:
+                results[ind_location]= [memory]
+
     except Exception as e:
         return(f"An error occurred in mongoGetAllMemories: {e}")
     results_json = json.dumps(results, default=str)  # 'default=str' helps in converting non-serializable objects
