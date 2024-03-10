@@ -234,7 +234,8 @@ def mongoGetAllMemories(timestamp):
                 if ind_location in results:
                     results[ind_location].append(memory) 
                 else:
-                    results[ind_location] = [memory]
+                    results[str(memory['_id'])]= [memory]
+                    #results[ind_location] = [memory]
             else:
                 results[str(memory['_id'])]= [memory]
 
