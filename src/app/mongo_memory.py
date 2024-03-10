@@ -192,14 +192,14 @@ def mongoGetMemoriesInFrame(ne_lat, ne_long, sw_lat, sw_long):
         })
 
         # Print the query and the number of documents found
-        print("Query:")
-        print({
-            "coordinates": {
-                "$geoWithin": {
-                    "$geometry": polygon
-                }
-            }
-        })
+        # print("Query:")
+        # print({
+        #     "coordinates": {
+        #         "$geoWithin": {
+        #             "$geometry": polygon
+        #         }
+        #     }
+        # })
         results = []
  
         for document in result:
@@ -223,7 +223,6 @@ def mongoGetAllMemories(timestamp):
         date_object = datetime.strptime(timestamp.split('T')[0], '%Y-%m-%d')
     except:
         date_object = datetime.strptime(timestamp, '%Y-%b-%d')
-    print(timestamp)
 
     formatted_date = date_object.strftime("%Y-%m-%d")
     try: 
@@ -231,10 +230,11 @@ def mongoGetAllMemories(timestamp):
         for memory in memories:
             ind_location = memory['location']
             # For shared memories, if two memories have the same location, group them
-            if ind_location in results:
-                results[ind_location].append(memory) 
-            else:
-                results[ind_location] = [memory]
+            if memory["is_precise"] == "true":
+                if ind_location in results:
+                    results[ind_location].append(memory) 
+                else:
+                    results[ind_location] = [memory]
     except Exception as e:
         return(f"An error occurred in mongoGetMemoriesInFrame: {e}")
     results_json = json.dumps(results, default=str)  # 'default=str' helps in converting non-serializable objects
