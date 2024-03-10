@@ -228,15 +228,15 @@ def mongoGetAllMemories(timestamp):
     try: 
         memories = memories_collection.find({'timestamp': formatted_date})
         for memory in memories:
-            ind_location = memory['location']
             # For shared memories, if two memories have the same location, group them
             if memory["is_precise"] == "true":
+                ind_location = memory['location']
                 if ind_location in results:
                     results[ind_location].append(memory) 
                 else:
                     results[ind_location] = [memory]
             else:
-                results[ind_location]= [memory]
+                results[memory["_id"]]= [memory]
 
     except Exception as e:
         return(f"An error occurred in mongoGetAllMemories: {e}")
