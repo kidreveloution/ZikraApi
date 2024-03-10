@@ -29,6 +29,7 @@ app.add_middleware(
 class addEntry(BaseModel):
     title: str
     location: str
+    is_precise: str
     timestamp: str
     lat: float
     lon: float
@@ -60,6 +61,7 @@ def read_item(
     videoMemory = Video(
         title=item.title,
         location=item.location,
+        is_precise=item.is_precise,
         timestamp=item.timestamp,
         lat=item.lat,
         lon=item.lon,

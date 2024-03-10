@@ -31,7 +31,8 @@ memory_geo_collection.create_index([("memory_geo_index", "2dsphere")])
 class Memory:
     def __init__(self, 
                 title: str, 
-                location: str, 
+                location: str,
+                is_precise:str, 
                 timestamp, 
                 lat: float, 
                 lon: float, 
@@ -41,6 +42,7 @@ class Memory:
         self.id = str(uuid.uuid4()) if id is None else id
         self.title = title
         self.location = location
+        self.is_precise = is_precise
         self.timestamp = timestamp
         self.lat = self._convert_to_float(lat)
         self.lon = self._convert_to_float(lon)
@@ -59,6 +61,7 @@ class Video(Memory):
             self, 
             title, 
             location, 
+            is_precise,
             timestamp, 
             lat, 
             lon, 
@@ -67,7 +70,8 @@ class Video(Memory):
             descx):
         super().__init__(
             title=title, 
-            location=location, 
+            location=location,
+            is_precise=is_precise, 
             timestamp=timestamp, 
             lat=lat, 
             lon=lon, 
@@ -90,6 +94,7 @@ def mongoSave(memory):
         memory_data = {
             'title': memory.title,
             'location': memory.location,
+            'is_precise':memory.is_precise,
             'timestamp': memory.timestamp,
             'lat': memory.lat,
             'lon': memory.lon,
