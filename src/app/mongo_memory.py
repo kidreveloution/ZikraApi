@@ -236,7 +236,7 @@ def mongoGetAllMemories(timestamp):
                 else:
                     results[ind_location] = [memory]
             else:
-                results[memory["_id"]]= [memory]
+                results[str(memory["_id"])]= [memory]
 
     except Exception as e:
         return(f"An error occurred in mongoGetAllMemories: {e}")
